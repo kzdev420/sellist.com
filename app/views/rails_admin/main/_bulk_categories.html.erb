@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-5">
+    <%= text_field_tag 'product_category_name', '', name: "product_category[name]", class: "form-control", required: "required", size: "50" %>
+  </div>
+  <div class="col-sm-4">
+    <label class="btn btn-primary">
+      Browse&hellip; <%= file_field_tag :csv_file, value: "upload", accept: 'text/csv', style: "display: none;" %>
+    </label>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#csv_file").change(function(){
+      file = $("#csv_file")[0].files[0];
+      formData = new FormData();
+      formData.append('csv_file', file);
+      console.log(file);
+      $.ajax({
+        url:  "/upload_csv",
+        type: "POST",
+        contentType: false,
+        processData: false,
+        data : formData,
+        success: function(data){
+        }
+      });
+    });
+
+    $( '#new_product_category' ).submit( function( e ) {
+      e.preventDefault();
+      $.ajax( {
+        url: '/create_product_category',
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        data: new FormData( $("#new_product_category")[0] ),
+      } );
+    } );
+  });
+</script>

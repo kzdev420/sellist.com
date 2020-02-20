@@ -1,0 +1,5 @@
+<% if params[:type] == "sub_catg_options1" %>
+  <%= select("sub_catg_id1", '', options_from_collection_for_select(@sub_categories, :id, :name, params[:sub_catg_id1]), {prompt: 'Sub-Category'}, name: "sub_catg_id1", :data => { :remote => true, :url => url_for("/admin/change_sub_category")}) %>
+<% else %>
+  <%= select("sub_catg_id2", '', options_from_collection_for_select(@sub_categories, :id, :name), {prompt: 'Sub-Category'}, name: "sub_catg_id2") %>
+<% end %>

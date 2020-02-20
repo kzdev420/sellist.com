@@ -1,0 +1,36 @@
+<%= render partial: 'shared/header' %>
+
+<div class="container-fluid">
+  <div class="login-container">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="form-group">
+            <h3>Login</h3>
+          </div>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="form-group">
+              <div class="input-box">
+                <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-box">
+                <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Passphrase" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-box">
+                <%= f.submit "Login", class: "continue-btn" %>
+              </div>
+            </div>
+          <% end %>
+          <div class="login-footer-links">
+            <%= link_to 'Create account', new_user_registration_path, class: "pull-left" %>
+            <%= link_to 'Forgot password?', new_user_password_path, class: "pull-right" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

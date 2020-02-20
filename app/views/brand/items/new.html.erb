@@ -1,0 +1,58 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>Item Import</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="box">
+        <div class="box-body">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td class="pd-bottom30">
+                  <div class="text-center">
+                    <p class="font-15">Start by downloading the template .CSV file, fill in all the fields your product requires. A dummy record on row two will show you what each field is for. Once completed, import your spreadsheet.</p>
+                    <%= link_to 'Download CSV Template', brand_download_example_items_path, class: 'styled-btn marginT10', download: true %>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <%= form_tag brand_upload_item_path, multipart: true do %>
+                  <td class="pd-top30">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <%= text_field_tag :items_file_name, '', class: 'form-control', disabled: true %><br/>
+                      </div>
+                      <div class="col-md-3">
+                        <%= submit_tag 'Import', class: "btn btn-block btn-primary" %>
+                      </div>
+                      <div class="col-md-8">
+                        <label class="styled-btn pull-right">
+                          Browse… <%= file_field_tag :item_file, value: "upload", accept: 'text/csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', style: "display: none;", required: true %>
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  $(function($) {
+    $('#item_file').change(function() {
+      if ($(this).val()) {
+         var filename = $(this).val().split('\\').pop(-1);
+         $('#items_file_name').val(filename);
+       }
+    });
+  });
+</script>

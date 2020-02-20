@@ -1,0 +1,58 @@
+<div class="container pad-btm">
+  <div class="pull-right">
+    <%= link_to 'Delete', brand_item_path(id: @item.id), method: 'delete', data: {confirm: "Are you sure?"} %>
+    <span> | </span>
+    <%= link_to 'Back', brand_items_path %>
+  </div>
+  <div class="item-details">
+    <div class="row">
+      <% @attributes.each do |col| %>
+        <% val = @item.send(col) %>
+        <% unless val.blank? %>
+          <div class="col-md-12 item">
+            <div class="col-md-3 heading"><%= col.humanize %></div>
+            <div class="col-md-9"><%= val %></div>
+          </div>
+        <% end %>
+      <% end %>
+      <% unless @item.category.blank? %>
+        <div class="col-md-12 item">
+          <div class="col-md-3 heading">Main Category</div>
+          <div class="col-md-9"><%= @item.category.name %></div>
+        </div>
+      <% end %>
+      <% unless @item.sub_category.blank? %>
+        <div class="col-md-12 item">
+          <div class="col-md-3 heading">Sub Category</div>
+          <div class="col-md-9"><%= @item.sub_category.name %></div>
+        </div>
+      <% end %>
+      <% unless @item.product_category.blank? %>
+        <div class="col-md-12 item">
+          <div class="col-md-3 heading">Product Category</div>
+          <div class="col-md-9"><%= @item.product_category.name %></div>
+        </div>
+      <% end %>
+      <% images = @item.images %>
+      <% unless images.blank? %>
+        <div class="col-md-12 item">
+          <div class="col-md-3 heading">Images</div>
+          <div class="col-md-9 images-list">
+            <% images.each do |image| %>
+              <span class="item-image"><%= image_tag(image.file.url, class: 'img-responsive') %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <div class="col-md-12 item">
+        <div class="col-md-3 heading">Enabled for Sale</div>
+        <div class="col-md-9">
+          <div class="switch_box box_1">
+            <%= check_box_tag :enabled_for_sale, true, @item.enabled_for_sale, { onchange: "$(this).data('params', 'complete=' + this.checked)", data: { url: url_for(action: 'update', id: @item.id), remote: true, method: :patch }, class: "switch_1", name: "item[enabled_for_sale]"} %>
+            <%#= check_box_tag 'complete', true, @item.enabled_for_sale, :url => url_for( :action => 'update', :id => @item.id ), method: 'patch', remote: true, class: "switch_1" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

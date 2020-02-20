@@ -1,0 +1,6 @@
+$('#items-list').html("<%= escape_javascript(render :partial => 'items') %>");
+$('#discontinued').val("<%= params[:discontinued] %>");
+
+<% if !params[:prod_catg_id].blank? or !params[:sub_catg_id].blank? or !params[:catg_id].blank? or params[:clear] %>
+  $('.breadcrumb').html("<%= escape_javascript(render :partial => 'breadcrumb') %>");
+<% end %>

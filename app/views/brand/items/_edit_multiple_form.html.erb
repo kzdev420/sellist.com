@@ -1,0 +1,99 @@
+<div class="modal-dialog modal-lg">
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Edit Multiple Items</h4>
+    </div>
+    <div class="modal-body item-modal mod_multiple">
+      <%= form_tag brand_update_multiple_items_path, remote: true do %>
+        <%= hidden_field_tag :items, params[:items].join(',') %>
+        <%= hidden_field_tag :old_enabled_for_sale, params[:enabled_for_sale] %>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Main Category</label>
+              <%= select(:category_id, '', options_from_collection_for_select(@categories, :id, :name), {prompt: 'Primary Category'}, class: 'form-control', data: { remote: true, url: url_for(action: "change_catg", type: 'edit_multiple')}) %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group" id="sub-categories">
+              <label>Sub Category</label>
+              <%= select(:sub_category_id, '', options_from_collection_for_select(@sub_categories, :id, :name), {prompt: 'Sub Category'}, class: 'form-control', data: { remote: true, url: url_for(action: "change_sub_catg", type: 'edit_multiple')}) %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group" id="product-categories">
+              <label>Product Category</label>
+              <%= select(:product_category_id, '', options_from_collection_for_select(@product_categories, :id, :name), {prompt: 'Product Category'}, name: 'product_category_id', class: 'form-control') %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Commission in Percentage</label>
+              <%= number_field_tag :commission_in_percent, '', class: 'form-control', step: 'any' %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Commission in Currency</label>
+              <%= number_field_tag :commission_in_currency, '', class: 'form-control', step: 'any' %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-switcher form-switcher-lg form-switcher-sm-phone">
+              <span>Selling</span>
+              <label class="switch">
+                <%= check_box_tag :enabled_for_sale, true, eval(params[:enabled_for_sale]) %>
+                <span class="slider round"></span>
+              </label>
+              <small>NO/YES</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Size</label>
+              <%= text_field_tag :size, '', class: 'form-control', name: 'style[Size][]' %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Material</label>
+              <%= text_field_tag :material, '', class: 'form-control', name: 'style[Material][]' %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Shape</label>
+              <%= text_field_tag :shape, '', class: 'form-control', name: 'style[Shape][]' %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Weight</label>
+              <%= text_field_tag :weight, '', class: 'form-control', name: 'style[Weight][]' %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Color</label>
+              <%= text_field_tag :color, '', class: 'form-control', name: 'style[Color][]' %>
+              <!-- <input type="color" name="style[Color][]" value="#ff0000" class="form-control"> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <%= submit_tag 'Save', class: "sub_btn" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

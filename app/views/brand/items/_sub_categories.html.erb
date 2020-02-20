@@ -1,0 +1,7 @@
+<% if params[:type].blank? %>
+  <%#= select_tag :sub_category_id, options_for_select(@sub_categories.map{|c| [c.name, c.id]}), class: 'input-group filtering-select col-sm-2 form-control', name: 'sub_category_id[]', required: true, { :onchange => remote_function( :url => brand_change_sub_category_path(index: index), :with=>"'sub_catg_id='+this.value+''" ) } %>
+  <%= select_tag :sub_category_id, options_for_select(@sub_categories.map{|c| [c.name, c.id]}), class: 'input-group filtering-select col-sm-2 form-control', id: "sub_category_id_#{index}", name: 'sub_category_id[]', prompt: "Select Sub Category", data: { remote: true, url: url_for(action: "change_sub_catg", index: index)} %>
+<% else %>
+  <label>Sub Category</label>
+  <%= select(:sub_category_id, '', options_from_collection_for_select(@sub_categories, :id, :name), {prompt: 'Sub Category'}, class: 'form-control', data: { remote: true, url: url_for(action: "change_sub_catg", type: 'edit_multiple')}) %>
+<% end %>

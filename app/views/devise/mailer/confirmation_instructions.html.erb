@@ -1,0 +1,57 @@
+<center>
+  <table cellspacing="0" cellpadding="0" align="center" border="0" height="100%" width="720px" id="bodyTable">
+    <tr>
+      <td>
+        <table cellspacing="0" cellpadding="0" align="center" border="0" height="100%" width="720px" id="bodyTable1">
+          <tr>
+            <td class="bodyContent" align="center" valign="top">
+              <%#= image_tag("#{APP_CONFIG['site_url']}/assets/logo.svg") %>
+              <%= image_tag("logo.svg") %>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent1" align="left" valign="top">
+              <p id="date" style="color:#f1f2f2"><%= Date.today.strftime('%B %d, %Y').upcase %></p>
+            </td>
+          </tr>
+        </table>
+        <table cellspacing="0" cellpadding="0" align="center" border="0" height="100%" width="720px" id="bodyTable2">
+          <tr>
+            <td class="bodyContent2" align="left" valign="top">
+              <h2>Verify your email address</h2>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent3" align="left" valign="top">
+              <p>Hi, thank's for creating a Sellist account!</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent4" align="left" valign="top">
+              <h4>Account Activation Code: <span id="code"><%= @token %></span></h4>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent5" align="left" valign="top">
+              <h4>Next Steps,</h4>
+              <p>Upload items using the Item Import Template. Then upload photos for those items, verify all item details on the selling page and mark them for sale.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent6" align="center" valign="top">
+              <p>If you need help at anytime please use the chat on the bottom right of every page in your Sellist account or email <a href="mailto:support@sellist.io" style="color:#27aae1">support@sellist.io</a></p>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent7" align="center" valign="top">
+              <p>You are receiving this email because you signed up for a Sellist Account.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</center>
+
+<%#= link_to 'Confirm my account', user_activation_url(type: @resource.account_type)  %>
+<%# confirmation_url(@resource, confirmation_token: @token) %>

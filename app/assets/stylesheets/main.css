@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+html, body{
+	height:100% !important;
+}
+body{
+	font-family: 'Open Sans', sans-serif;
+	margin:0px;
+	padding:0px;
+	color:#fff;
+	font-size:14px;
+}
+:focus{
+	outline:none;
+}
+label{
+	font-weight:300;
+	font-size:15px;
+}
+.pad-L5{
+	padding-left:5px;
+}
+.pad-R5{
+	padding-right:5px;
+}
+.home-wrapper{
+	background:#34363a;
+	min-height:100%;
+}
+.inner-wrapper{
+	background:#fff;
+	min-height:100%;
+	color: #333;
+}
+.home-logo{
+	width:40px;
+	margin:20px;
+	display:inline-block;
+}
+.home-nav ul li a{
+	color:#fff;
+}
+.home-nav ul li.help{
+	padding:15px;
+	line-height:20px;
+}
+.tell-identity h3{
+	text-align:center;
+	font-size:33px;
+	margin-top:0px;
+	font-weight:600;
+}
+.tell-identity.password-form h3{font-size: 25px;}
+.tell-identity p.subtitle{
+	text-align:center;
+	font-size:14px;
+	margin-bottom:20px;
+	font-weight:100;
+}
+.tell-identity .iam{
+	display:block;
+	padding-top:9px;
+	font-size:16px;
+}
+.tell-identity select{
+	width:100%;
+	height:42px;
+	color:#333;
+	padding:0 10px;
+	border: solid 1px #fff;
+    border-radius: 2px;
+}
+.tell-identity .continue-btn{
+	background:#e42867;
+	border:none;
+	height:42px;
+	border-radius:2px;
+	width:100%;
+	font-size:16px;
+}
+.input-box input{
+	background:#fff;
+	border:none;
+	height:40px;
+	border-radius:2px;
+	width:100%;
+	color:#333;
+}
+.tell-identity p.never-shared{
+	font-size:13px;
+	font-weight:100;
+}
+
+.bs-wizard {border-radius:10px;}
+
+/*Form Wizard*/
+.bs-wizard {border-bottom: solid 1px #e0e0e0; padding:0;}
+.bs-wizard > .bs-wizard-step {padding: 20px 0 23px 0; position: relative;}
+.bs-wizard > .bs-wizard-step + .bs-wizard-step {}
+.bs-wizard > .bs-wizard-step .bs-wizard-stepnum {color: #939596; font-size: 12px; text-transform:uppercase; margin-bottom: 5px; letter-spacing:1px;}
+.bs-wizard > .bs-wizard-step .bs-wizard-info {color: #999; font-size: 14px;}
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot {position: absolute; width: 24px; height: 24px; display: block; top: 60px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;}
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: linear-gradient(#7a8dff , #0dc7ff ); border-radius: 50px; position: absolute; top: 8px; left: 8px; }
+.bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 1px; box-shadow: none; margin: 23px 0; background:#e3e5e7;}
+.bs-wizard > .bs-wizard-step > .progress > .progress-bar {width:0px; box-shadow: none; background: none;}
+.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100%;}
+.bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {width:50%;}
+.bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {width:0%;}
+.bs-wizard > .bs-wizard-step:last-child.active > .progress > .progress-bar {width: 100%;}
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {background:linear-gradient(#7a8dff , #0dc7ff );}
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {opacity: 0;}
+.bs-wizard > .bs-wizard-step:first-child  > .progress {left: 50%; width: 50%;}
+.bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
+.bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
+.bs-wizard > .col-xs-2{width:14.28%;}
+.complete{background:url(process-step-active.png) repeat-x;}
+.complete.first, .complete:first-child{border-top-left-radius:10px; border-bottom-left-radius:10px;}
+.complete.last, .complete:last-child{border-top-right-radius:10px; border-bottom-right-radius:10px;}
+.complete .bs-wizard-dot{width:36px !important; height:36px !important; top:56px !important;}
+.complete .bs-wizard-dot:after{width:24px !important; height:24px !important; top:6px !important; left: 6px !important;}
+.complete.white-dot .bs-wizard-dot:after{background:#fff !important}
+.complete .bs-wizard-stepnum{color:#fff !important}
+.bs-wizard-number{color:#fff; display:none;}
+label.error{color:red;}
+
+
+@media screen and (max-width: 768px) {
+   .pad-R5{padding-right:15px;}
+   .pad-L5{padding-left:15px;}
+   .m-margin-btm{margin-bottom:15px;}
+}

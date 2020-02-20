@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="tell-identity password-form">
+      <h3>Forgot your password?</h3>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <div class="form-group">
+          <div class="input-box">
+            <%= f.email_field :email, class: "form-control", placeholder: "Email Address", autofocus: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Send me reset password instructions", class: "continue-btn" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

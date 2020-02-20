@@ -1,0 +1,6 @@
+%br
+.dropdown
+  %button.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+    %btncaption Select Record Detail
+    %span.caret
+  %ul.dropdown-menu= main_navigation + content_tag(:li, link_to("Categories", "/admin/categories")) + static_navigation

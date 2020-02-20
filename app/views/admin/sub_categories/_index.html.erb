@@ -1,0 +1,9 @@
+<ul>
+  <% @sub_categories.each do |catg| %>
+    <li>
+		<div class="checkbox check_b">
+		  <label><%= check_box_tag :del_sub_categories, catg.id, false, name: 'del_sub_categories[]' %><%= catg.name %></label>
+		</div>
+	</li>
+  <% end %>
+</ul>

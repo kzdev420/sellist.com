@@ -1,0 +1,98 @@
+<div class="main_cat">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-2 no_select">
+				<h4>Primary Categories</h4>
+				<%= form_tag '/admin/categories/delete' do %>
+					<div class="box_b">
+					  <ul>
+					    <% @categories.each do |catg| %>
+					      <li>
+					      	<div class="checkbox check_b">
+									  <label><%= check_box_tag :del_categories, catg.id, false, name: 'del_categories[]' %><%= catg.name %></label>
+									</div>
+					      </li>
+					    <% end %>
+					  </ul>
+					</div>
+					<div class="btn_b text-right">
+						<%= submit_tag 'Delete', class: 'btn btn-danger', data: { confirm: 'It will delete all Sub-Categories/Product Categories under the Primary Category. Are you sure?' } %>
+					</div>
+				<% end %>
+			</div>
+
+			<div class="col-md-2 no_select">
+				<h4>Add Categories</h4>
+  			<%= form_tag '/admin/categories/add' do %>
+          <%= text_area_tag :categories, '', class: 'box_b custom', required: true %>
+  			  <div class="btn_b text-right">
+          	<%= submit_tag 'Add', class: 'btn btn-success' %>
+  			  </div>
+  			<% end %>
+			</div>
+			<div class="col-md-2 single_select">
+				<%= form_tag '/admin/sub-categories/delete' do %>
+					<div>
+	          <%= select(:id, '', options_from_collection_for_select(@categories, :id, :name, params[:id]), {prompt: 'Primary Category'}, name: 'id', :data => { :remote => true, :url => url_for("/admin/change_category")}) %>
+					</div>
+					<h4>Sub Categories</h4>
+	        <div class="box_b" id="sub_categories">
+					  <%= render partial: 'admin/sub_categories/index' if params[:id].present? and @sub_categories.present? %>
+					</div>
+					<div class="btn_b text-right">
+						<%= submit_tag 'Delete', class: 'btn btn-danger', data: { confirm: 'It will delete all Product Categories under the Sub Category. Are you sure?' } %>
+					</div>
+				<% end %>
+			</div>
+			<div class="col-md-2 single_select">
+        <%= form_tag '/admin/sub-categories/add' do %>
+  				<div>
+  					<%= select(:category_id, '', options_from_collection_for_select(@categories, :id, :name), {prompt: 'Primary Category'}, name: 'category_id', required: true) %>
+  				</div>
+  				<h4>Add Sub-Categories</h4>
+          <%= text_area_tag :sub_categories, '', class: 'box_b custom', required: true %>
+  				<div class="btn_b text-right">
+  					<%= submit_tag 'Add', class: 'btn btn-success' %>
+  				</div>
+        <% end %>
+			</div>
+			<div class="col-md-2">
+				<%= form_tag '/admin/product-categories/delete' do %>
+					<div>
+						<%= select(:catg_id, '', options_from_collection_for_select(@categories, :id, :name, params[:catg_id]), {prompt: 'Primary Category'}, name: 'catg_id', :data => { :remote => true, :url => url_for("/admin/change_main_category?type=sub_catg_options1")}) %>
+					</div>
+	        <div class="sub_catg_options1">
+						<% if params[:sub_catg_id1].present? and @sub_categories.present? %>
+							<%= render partial: 'admin/sub_categories/options' unless @sub_categories.blank? %>
+						<% else %>
+							<%= select(:sub_catg_id1, '', options_for_select([]), {prompt: 'Sub-Category'}, name: 'sub_catg_id1', :data => { :remote => true, :url => url_for("/admin/change_sub_category")}) %>
+						<% end %>
+					</div>
+					<h4>Product Categories</h4>
+	        <div class="box_b" id="prod_categories">
+					  <%= render partial: 'admin/product_categories/index' unless @product_categories.blank? %>
+					</div>
+					<div class="btn_b text-right">
+						<%= submit_tag 'Delete', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+					</div>
+				<% end %>
+			</div>
+			<div class="col-md-2">
+        <%= form_tag '/admin/product-categories/add' do %>
+  				<div>
+  					<%= select(:catg_id, '', options_from_collection_for_select(@categories, :id, :name), {prompt: 'Primary Category'}, name: 'catg_id', :data => { :remote => true, :url => url_for("/admin/change_main_category?type=sub_catg_options2")}) %>
+  				</div>
+  				<div class="sub_catg_options2">
+  					<%= select(:sub_catg_id2, '', options_for_select([]), {prompt: 'Sub-Category'}, name: 'sub_catg_id2') %>
+  				</div>
+  				<h4>Add Product Categories</h4>
+  				<%= text_area_tag :product_categories, '', class: 'box_b custom', required: true %>
+  				<div class="btn_b text-right">
+  					<%= submit_tag 'Add', class: 'btn btn-success' %>
+  				</div>
+        <% end %>
+			</div>
+		</div>
+	</div>
+</div>

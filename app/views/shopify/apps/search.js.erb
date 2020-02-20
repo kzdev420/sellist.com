@@ -1,0 +1,6 @@
+<% unless @apps.blank? %>
+  $('#apps-list').html("<%= escape_javascript(render :partial => 'shopify/shared/apps_list') %>");
+<% else %>
+  $('#recommendedAppModal').html("<%= escape_javascript(render :partial => 'shopify/apps/recommended_app_modal') %>");
+  $("#recommendedAppModal").modal();
+<% end %>

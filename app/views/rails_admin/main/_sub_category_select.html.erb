@@ -1,0 +1,1 @@
+<%= select_tag :product_category_sub_category_id, options_for_select(@categories.map{|c| [c.name, c.id]}), class: 'input-group filtering-select col-sm-2 form-control', prompt: 'Search', name: 'product_category[sub_category_id]', required: true, style: "width: 22%;" %>

@@ -1,0 +1,163 @@
+<div class="module-left-pane">
+  <div class="left-filters">
+    <div>
+      <div class="left-filters-title">
+        <div class="py1" id="selection">
+
+        </div>
+        <div class="py1">
+          <div class="selection gray-bottom">
+            <span>Refine by</span>
+          </div>
+        </div>
+        <div>
+          <%= form_tag seller_search_market_items_path, id: 'search-form', remote: true do %>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading gray-bottom" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <i class="more-less glyphicon glyphicon-minus"></i>
+                      Brand
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <div class="search cf my1 relative">
+                      <%#= autocomplete_field_tag :brand_detail_id, '', seller_autocomplete_brand_name_path(), class: "px4", 'min-length' => 1, placeholder: "Search by brand..." %>
+                      <%= text_field_tag :brand, '', class: "px4", 'min-length' => 1, placeholder: "Search by brand..." %>
+                      <i class="absolute fa fa-search" aria-hidden="true"></i>
+                    </div>
+                    <div class="toggle-wrapper" id="brands-list">
+                      <div class="scroll-height">
+                        <% BrandDetail.first(4).each do |brand| %>
+                          <span class="item relative clearfix py1">
+                            <div class="filter-style">
+                              <div class="checkbox checkbox-circle">
+                                <%= check_box_tag "brands[]", brand.id, false, id: brand.company_name.gsub(' ', '_') %>
+                                <label for="<%= brand.company_name.gsub(' ', '_') %>">
+                                  <%= brand.company_name %>
+                                </label>
+                              </div>
+                            </div>
+                          </span>
+                        <% end %>
+                      </div>
+                      <% if BrandDetail.count > 4 %>
+                        <a href="#" class="toggleHeight smaller inline-block py1"><span class="sr-only">toggle to see more filters</span></a>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading  gray-bottom" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      <i class="more-less glyphicon glyphicon-plus"></i>
+                      Price
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <div class="toggle-wrapper">
+                      <div class="scroll-height">
+                        <a href="#" class="item relative clearfix py1">
+                          <div class="filter-style">
+                            <div class="checkbox checkbox-circle">
+                              <input id="checkbox7" type="checkbox">
+                              <label for="checkbox7">
+                                $0 - $25
+                                <span class="smaller">(3985)</span>
+                              </label>
+                            </div>
+                          </div>
+                        </a>
+                        <a href="#" class="item relative clearfix py1">
+                            <div class="filter-style">
+                                <div class="checkbox checkbox-circle">
+                                    <input id="checkbox8" type="checkbox">
+                                    <label for="checkbox8">
+                                        $0 - $25
+                                        <span class="smaller">(3985)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="item relative clearfix py1">
+                            <div class="filter-style">
+                                <div class="checkbox checkbox-circle">
+                                    <input id="checkbox9" type="checkbox">
+                                    <label for="checkbox9">
+                                        $0 - $25
+                                        <span class="smaller">(3985)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="item relative clearfix py1">
+                            <div class="filter-style">
+                                <div class="checkbox checkbox-circle">
+                                    <input id="checkbox10" type="checkbox">
+                                    <label for="checkbox10">
+                                        $0 - $25
+                                        <span class="smaller">(3985)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default gray-bottom">
+                <div class="panel-heading" role="tab" id="headingThree">
+                  <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      <i class="more-less glyphicon glyphicon-plus"></i>
+                      Ratings
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body">
+                    Anim pariatur cliche reprehenderit,
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#brand').keyup(function() {
+    val = $(this).val();
+    $.ajax({
+      url:  "/marketplace/search-brands",
+      type: "GET",
+      data : {
+        term: val
+      },
+      success: function(data){
+      }
+    });
+  });
+
+  $('.filter-style input[type="checkbox"]').change(function(){
+    $('#search-form').submit();
+  });
+
+  $('.panel-title a').click(function(){
+    $(this).children('.glyphicon').toggleClass('glyphicon-minus');
+    $(this).children('.glyphicon').toggleClass('glyphicon-plus')
+  })
+</script>

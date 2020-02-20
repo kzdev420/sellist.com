@@ -1,0 +1,33 @@
+<% image = item.images[0] %>
+<div class="thumbnail store style1">
+  <div class="header">
+    <!--<div class="badges">
+      <span class="product-badge top right text-warning">
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star-half-o"></i>
+      </span>
+    </div>-->
+    <figure class="layer boxes-box">
+      <%= link_to seller_item_details_path(id: item.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} do %>
+        <% if image.present? and image.file.present? %>
+          <%= image_tag(image.file.url, class: "front", alt: item.name) %>
+        <% else %>
+          <%= image_tag('No_Image_Available.jpg', class: "front", alt: item.name) %>
+        <% end %>
+      <% end %>
+    </figure>
+  </div>
+  <div class="caption">
+    <h6 class="regular"><%= item.title %></h6>
+    <div class="item-code"><%= item.item_number %></div>
+    <div class="add-to-store">
+      <%= link_to 'Add To Store', seller_add_item_to_store_path(id: item.id), remote: true unless (current_user.seller_items.where("discontinued = ?", false).map(&:item_id).include? item.id) %>
+    </div>
+    <div class="price">
+      <span class="amount text-primary"><%= number_to_currency(item.price) %></span>
+    </div>
+  </div>
+</div>

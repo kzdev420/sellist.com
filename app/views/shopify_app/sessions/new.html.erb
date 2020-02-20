@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sellist</title>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%= stylesheet_link_tag 'user_home', 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+      <% if current_user %>
+        <%= render partial: 'shared/user_header' %>
+      <% else %>
+        <%= render partial: 'shared/header' %>
+      <% end %>
+      <% if current_user.brand %>
+        <%= render partial: 'brand/shared/sidebar' %>
+      <% else %>
+        <%= render partial: 'seller/shared/sidebar' %>
+      <% end %>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <%= render partial: 'shopify/shared/sync_btn' %>
+        <%#= render partial: 'new' %>
+      </div>
+      <!-- /.content-wrapper -->
+      <%= render partial: 'shared/footer' %>
+    </div>
+  </body>
+</html>

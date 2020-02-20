@@ -1,0 +1,3 @@
+<% unless params[:sub_catg_id1].blank? %>
+  $('#prod_categories').html("<%= escape_javascript(render :partial => 'admin/product_categories/index') %>");
+<% end %>

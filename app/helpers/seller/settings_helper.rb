@@ -1,0 +1,2 @@
+module Seller::SettingsHelper
+end

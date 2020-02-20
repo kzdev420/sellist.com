@@ -1,0 +1,2 @@
+module Shopify::IntegrationsHelper
+end

@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="row bs-wizard" style="border-bottom:0;">
+        <div class="col-xs-4 bs-wizard-step complete">
+          <div class="text-center bs-wizard-number">1</div>
+          <div class="text-center bs-wizard-stepnum">Credentials</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a href="#" class="bs-wizard-dot"></a>
+        </div>
+
+        <div class="col-xs-4 bs-wizard-step complete"><!-- complete -->
+          <div class="text-center bs-wizard-number">2</div>
+          <div class="text-center bs-wizard-stepnum"><%= params[:type] %> Identity</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a href="#" class="bs-wizard-dot"></a>
+        </div>
+
+        <div class="col-xs-4 bs-wizard-step complete"><!-- active -->
+          <div class="text-center bs-wizard-number">7</div>
+          <div class="text-center bs-wizard-stepnum">Activate</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a href="#" class="bs-wizard-dot"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="tell-identity">
+      <h3>Activate!</h3>
+      <p class="subtitle">Almost done! Punch in your activation key you received in your email.</p>
+      <%= form_tag activate_user_path do %>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <%= text_field_tag :activation_key, '', class: "form-control", placeholder: "Activation Key" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= submit_tag 'Activate', class: "continue-btn" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

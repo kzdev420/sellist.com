@@ -1,0 +1,91 @@
+<div class="box-body">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>
+          <label class="sell_check">
+            <%= check_box_tag :all_items, true, false %>
+            <input type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+        </th>
+        <th>Item</th>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Item Number</th>
+        <th>Upc</th>
+        <th>Price</th>
+        <th>Commission</th>
+        <!--<th></th>-->
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <% image = item.images[0] %>
+        <tr>
+          <td class="text-center">
+            <label class="sell_check">
+              <%= check_box_tag :items, item.id, false, name: "item[]" %>
+              <span class="checkmark"></span>
+            </label>
+            <%= link_to "<i class='fa fa-trash' aria-hidden='true'></i>".html_safe , brand_item_path(id: item.id), method: 'delete', class: 'delete-item', data: {confirm: "Are you sure?"} %>
+          </td>
+          <td class="item-img">
+            <% unless image.blank? or image.file.url.blank? %>
+              <%= link_to image_tag(image.file.url), edit_brand_item_path(id: item.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+            <% else %>
+              <%= link_to image_tag('No_Image_Available.jpg'), edit_brand_item_path(id: item.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+            <% end %>
+          </td>
+          <td class="item-name"><%= item.name %></td>
+          <td><%= item.title %></td>
+          <td><%= item.item_number %></td>
+          <td><%= item.upc %></td>
+          <td><%= number_to_currency(item.price) %></td>
+          <td><%= number_to_currency(item.commission_in_currency) %></td>
+          <!--<td>
+            <%#= link_to '<i class="fa fa-eye" aria-hidden="true"></i>'.html_safe, edit_brand_item_path(id: item.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+          </td>-->
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<!-- /.box-body -->
+<div class="text-center items-paging">
+  <%= custom_will_paginate(@items, params: {controller: 'brand/items', action: 'update_list', enabled_for_sale: params[:enabled_for_sale]}, remote: true) %>
+</div>
+
+<script>
+  $('#all_items').change(function(){
+    if($(this).is(":checked")){
+      $("tbody").find('input[type=checkbox]').each(function () {
+        this.checked = true;
+      });
+    }
+    else{
+      $("tbody").find('input[type=checkbox]').each(function () {
+        this.checked = false;
+      });
+    }
+  });
+
+  function updateMultiple(){
+    selected = [];
+    $("tbody").find('input[type=checkbox]:checked').each(function () {
+      selected.push($(this).val());
+    });
+    if(selected.length == 0){
+      alert("Please select atleast one item!")
+    }
+    else{
+      $.ajax({
+        url:  "/items/edit-mutiple",
+        type: "GET",
+        data : {'items': selected, 'enabled_for_sale': <%= params[:enabled_for_sale] %>, 'page': '<%= params[:page] %>'},
+        success: function(data){
+        }
+      });
+    }
+  }
+</script>

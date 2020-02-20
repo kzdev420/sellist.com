@@ -1,0 +1,21 @@
+:javascript
+  $('.nav.nav-pills li.active').removeClass('active');
+  $('.nav.nav-pills li[data-model="#{@abstract_model.to_param}"]').addClass('active');
+  $(function() {
+    if('#{request.original_fullpath.split('?').first}' == '/admin/')
+      $(".btn BtnCaption").text("Select Record Detail");
+  });
+
+%title= "#{@abstract_model.try(:pretty_name) || @page_name} | #{[_get_plugin_name[0] || 'Rails', _get_plugin_name[1] || 'Admin'].join(' ')}"
+.page-header
+  %h1= @page_name
+- flash && flash.each do |key, value|
+  .alert.alert-dismissible{class: flash_alert_class(key)}
+    %button.close{type: 'button', :'data-dismiss' => "alert"} &times;
+    = value
+- unless params[:controller].include? "categories"
+  = breadcrumb
+  %ul.nav.nav-tabs
+    = menu_for((@abstract_model ? (@object.try(:persisted?) ? :member : :collection) : :root), @abstract_model, @object)
+    = content_for :contextual_tabs
+= yield

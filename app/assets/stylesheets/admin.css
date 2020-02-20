@@ -1,0 +1,45 @@
+.main_cat select {
+  width: 100%;
+  padding: 5px;
+  background-color: transparent;
+  margin-bottom: 10px;
+  height: 30px;
+}
+.main_cat ul {
+	list-style: none;
+	padding: 5px 10px;
+	margin-bottom: 0px;
+}
+.main_cat ul li {
+	position: relative;
+	padding-left: 0px;
+}
+.main_cat ul li .check_b {
+	margin: 0px;
+}
+.main_cat .box_b {
+	border: 1px solid grey;
+	height: 250px;
+	overflow: auto;
+}
+.main_cat .box_b.custom {
+	padding: 5px 10px;
+	width: 100%;
+	resize: none;
+}
+.main_cat .box_b:focus {
+	outline: none;
+}
+.main_cat .btn_b button, .main_cat .btn_b input[type="submit"] {
+	padding: 5px 15px;
+	margin-top: 10px;
+}
+.main_cat h4 {
+	height: 38px;
+}
+.main_cat .single_select {
+	padding-top: 40px;
+}
+.main_cat .no_select {
+	padding-top: 80px;
+}

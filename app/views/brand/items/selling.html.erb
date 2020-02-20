@@ -1,0 +1,45 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>Selling</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- <button class="btn sell_update" data-toggle="modal" data-target="#myModal">Update</button> -->
+      <%= link_to 'Update', '#', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: 'btn sell_update', onClick: 'updateMultiple()' %>
+
+      <ul class="nav nav-tabs">
+        <li class="active"><%= link_to 'Selling', brand_update_items_list_path(enabled_for_sale: true), class: 'no_bootstrap', remote: true %></li>
+        <li><%= link_to 'Not Selling', brand_update_items_list_path(enabled_for_sale: false), class: 'no_bootstrap', remote: true %></li>
+      </ul>
+      <div class="box" id="items-list">
+        <!-- /.box-header -->
+        <%= render partial: 'items' %>
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+  <!-- /.row -->
+  <!-- Main row -->
+  <div class="row">
+    <!-- Left col -->
+
+    <!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+    <!-- right col -->
+  </div>
+  <!-- /.row (main row) -->
+</section>
+<!-- /.content -->
+
+<div class="modal fade" id="modal-window" tabindex="-2" role="dialog" aria-labelledby="Item Preview"></div>
+
+<script>
+  $('.nav-tabs a').click(function(){
+    $('.nav-tabs li').removeClass('active');
+    $(this).parent().addClass('active');
+  });
+</script>

@@ -1,0 +1,63 @@
+<section class="content">
+  <div class="search_store">
+    <h4>Select Your Online Store Or Order Management System To Import,<br> Sync Products And Orders</h4>
+    <div class="input-group">
+      <%= form_tag shopify_apps_search_path, remote: true do %>
+        <div class="input-group-addon">
+          <%= button_tag do %><i class="fa fa-search"></i><% end %>
+        </div>
+        <%= autocomplete_field_tag :app_id, '', shopify_autocomplete_app_name_path(), class: "form-control apps-search", 'min-length' => 1, placeholder: "Search app...", :"data-autocomplete-label" => "Sorry, nothing found. Please click on search icon!" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <!--<div class="col-xs-6 col-xs-offset-3">
+      <div class="marg-top-20">
+        <%#= link_to 'Sync Shopify Products', shopify_path, class: 'styled-btn marginT10' %>
+      </div>
+    </div>-->
+    <div class="col-md-2">
+      <div class="integrate_index text-center" id="apps-list">
+        <% @apps = App.limit(6) %>
+        <%= render partial: 'shopify/shared/apps_list' %>
+      </div>
+    </div>
+
+    <div class="col-md-3" id="shopify-login-screen">
+      <%= render partial: 'shopify_app/sessions/login' %>
+    </div>
+
+    <%= render partial: 'shopify/shared/products' %>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="recommendedAppModal" class="modal fade" role="dialog"></div>
+
+<script>
+  $('#app_id').bind('railsAutocomplete.select', function(event, data){
+    /* Do something here */
+    id = data.item.id
+    $.ajax({
+      url:  "apps/show",
+      type: "GET",
+      data : { 'id': id },
+      success: function(data){
+      }
+    });
+  });
+
+  (function() {
+    $(".apps-search").autocomplete({
+      dataType: "json",
+      source: $('.apps-search').data('autocomplete-source'),
+      minLength: 1,
+      select: function(event, ui) {
+        $(".apps-search").val(ui.item.value);
+      }
+    }).data("ui-autocomplete")._renderItem = function(ul, item) {
+      return $("<li></li>").data("item.autocomplete", item).append("<a>" + "<img src='" + item.logo.ico.url + "'> " + item.label + "</a>").appendTo(ul);
+    };
+  }).call(this);
+</script>

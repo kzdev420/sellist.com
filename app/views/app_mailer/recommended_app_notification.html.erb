@@ -1,0 +1,48 @@
+<center>
+  <table cellspacing="0" cellpadding="0" align="center" border="0" height="100%" width="720px" id="bodyTable">
+    <tr>
+      <td>
+        <table cellspacing="0" cellpadding="0" align="center" border="0" height="100%" width="720px" id="bodyTable1">
+          <tr>
+            <td class="bodyContent" align="center" valign="top">
+              <%#= image_tag("#{APP_CONFIG['site_url']}/assets/logo.svg") %>
+              <%= image_tag("logo.svg") %>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent1" align="left" valign="top">
+              <p id="date" style="color:#f1f2f2"><%= Date.today.strftime('%B %d, %Y').upcase %></p>
+            </td>
+          </tr>
+        </table>
+        <table cellspacing="0" cellpadding="0" align="center" border="0" height="100%" width="720px" id="bodyTable2">
+          <tr>
+            <td class="bodyContent2" align="left" valign="top">
+              <h2>New App Recommended Notification</h2>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent3" align="left" valign="top">
+              <p>Hi,</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent4" align="left" valign="top">
+              <h4><%= @user.first_name %> recommended a new app to integrate into Sellist. Below are the details:</h4>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent5" align="left" valign="top">
+              <p>Name: <%= @app.name %></p>
+            </td>
+          </tr>
+          <tr>
+            <td class="bodyContent5" align="center" valign="top">
+              <p>URL: <%= link_to @app.url, @app.url, style: "color:#27aae1", target: '_blank' %></p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</center>

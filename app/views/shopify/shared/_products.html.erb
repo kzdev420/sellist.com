@@ -1,0 +1,43 @@
+<% if params[:step].to_i == 3 %>
+  <% unless @products.blank? %>
+    <div class="col-md-7">
+      <div class="import_product">
+        <h5>Select Products To Import And Keep In Sync</h5>
+
+        <% if @shopify_shops.length > 1 %>
+          <ul class="nav nav-pills">
+            <% @shopify_shops.each do |shop| %>
+              <li class="<%= 'active' if shop.id == @shopify_shop.id %>">
+                <%= link_to shop.name, shopify_update_products_path(id: shop.id), remote: true, 'data-toggle': "pill" %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <div class="tab-content">
+          <div id="menu1" class="tab-pane fade in active">
+            <div class="product_table" id="all-products">
+              <%= render partial: 'shopify/products/app_products' %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-10 no_pad">
+          <p>
+            NOTE! Only import and sync products you manufacture or own the brand rights to. If you knowingly sync products you do not manufacture or own brand rights to, you will incur a penalty of $100 a product and subject to account suspension.
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <script>
+    $(".nav-pills a").click(function(){
+      parent = $(this).parent();
+      $(".nav-pills li").removeClass('active');
+      parent.addClass('active');
+      //$("#all-products").html('<img src="/assets/loading.png">')
+      $("#all-products").html('Loading Products, Please wait..')
+    });
+  </script>
+<% end %>

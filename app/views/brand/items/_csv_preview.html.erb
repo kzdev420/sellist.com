@@ -1,0 +1,128 @@
+<div class="modal-dialog modal-md">
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-close">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body item-modal">
+      <div class="col-md-12">
+        <div class="item-detail">
+          <h3>
+            <%= @new_row['name'].blank? ? @new_row['title'] : @new_row['name'] %>
+            <span><%= @new_row['description'] %></span>
+          </h3>
+          <% @new_row.except!('name', 'description') %>
+          <div class="price clearfix marginT30px">
+            <div class="col-md-6">
+              <% unless @new_row["commission_in_currency"].blank? %>
+                <div class="text-left">Commission</div>
+                <span>$<%= @new_row["commission_in_currency"] %></span>
+                <% @new_row.except!("commission_in_currency") %>
+              <% end %>
+            </div>
+            <% unless @new_row["price"].blank? %>
+              <div class="col-md-6">
+                <div class="text-right">Price</div>
+                <span class="pull-right">$<%= @new_row["price"] %></span>
+              </div>
+              <% @new_row.except!("price") %>
+            <% end %>
+          </div>
+          <div class="attribute-tabs">
+            <% unless @new_row["heading_1"].blank? and @new_row["heading_2"].blank? and @new_row["heading_3"].blank? %>
+              <ul class="nav nav-tabs">
+                <% unless @new_row["heading_1"].blank? %>
+                  <li class="active"><%= link_to @new_row["heading_1"], '#tab1' %></li>
+                <% end %>
+                <% unless @new_row["heading_2"].blank? %>
+                  <li><%= link_to @new_row["heading_2"], '#tab2' %></li>
+                <% end %>
+                <% unless @new_row["heading_3"].blank? %>
+                  <li><%= link_to @new_row["heading_3"], '#tab3' %></li>
+                <% end %>
+              </ul>
+              <div class="tab-content">
+                <% unless @new_row["heading_1"].blank? %>
+                  <div id="tab1" class="tab-pane fade in active">
+                    <p><%= @new_row["h1_description"] %></p>
+                  </div>
+                  <% @new_row.except!("heading_1", "h1_description") %>
+                <% end %>
+                <% unless @new_row["heading_2"].blank? %>
+                  <div id="tab2" class="tab-pane fade">
+                    <p><%= @new_row["h2_description"] %></p>
+                  </div>
+                  <% @new_row.except!("heading_2", "h2_description") %>
+                <% end %>
+                <% unless @new_row["heading_3"].blank? %>
+                  <div id="tab3" class="tab-pane fade">
+                    <p><%= @new_row["h3_description"] %></p>
+                  </div>
+                  <% @new_row.except!("heading_3", "h3_description") %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <div class="row">
+            <% attributes = eval(@new_row['style']) %>
+            <% attributes.each do |key, value| %>
+              <% unless value.blank? %>
+                <div class="col-md-6 text-center min-height90">
+                  <% if key.downcase.include? "size" %>
+                    <div class="size">
+                      <p>Size</p>
+                      <% if value.class == Array %>
+                        <% value.each_with_index do |val, index| %>
+                          <span class="size-in <%= 'active' if index == 0 %>"><%= val %></span>
+                        <% end %>
+                      <% else %>
+                        <span class="size-in"><%= value %></span>
+                      <% end %>
+                    </div>
+                  <% elsif key.downcase.include? "color" %>
+                    <div class="select-color">
+                      <p>Color</p>
+                      <% if value.class == Array %>
+                        <select>
+                          <% value.each_with_index do |val, index| %>
+                            <option><%= val %></option>
+                          <% end %>
+                        </select>
+                      <% else %>
+                        <span class="size-in"><%= value %></span>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <div class="<%= ((value.class == Array) ? 'select-color' : 'size') %>">
+                      <p><%= key %></p>
+                      <% if value.class == Array %>
+                        <select>
+                          <% value.each_with_index do |val, index| %>
+                            <option><%= val %></option>
+                          <% end %>
+                        </select>
+                      <% else %>
+                        <span class="size-in"><%= value %></span>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'gallery', 'data-turbolinks-track': 'reload' %>
+
+<script>
+  $(document).ready(function(){
+    $(".nav-tabs a").click(function(){
+      $(this).tab('show');
+      return false;
+    });
+  });
+</script>

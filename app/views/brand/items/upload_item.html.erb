@@ -1,0 +1,117 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>CSV Preview</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <%= form_tag brand_save_items_path do %>
+    <%= hidden_field_tag :path, @path %>
+    <h3>
+      <span class="pull-right">
+        <%#= link_to 'View Full Brief', '#myModal', 'data-toggle' => "modal", class: "btn btn-primary" %>
+        <%#= link_to 'View Full Brief', brand_items_details_path(path: @path), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+      </span>
+    </h3>
+    <hr/>
+
+    <!-- Small boxes (Stat box) -->
+    <div class="row marginT30px">
+      <div class="col-xs-12">
+        <div class="box pad20">
+          <!-- /.box-header -->
+          <div class="box-body table-responsive">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <% @csv.headers.each do |header| %>
+                    <% unless header.blank? %>
+                      <% new_header = header.downcase.gsub(' ', '_').gsub('-', '_') %>
+                      <% unless new_header.include? "attribute" %>
+                        <% unless new_header.include? "category" %>
+                          <% selected = @attributes.select{ |attrib| new_header.include? attrib or attrib.include? new_header } %>
+                          <th><%= select_tag :attribute, options_for_select(@attributes, selected), class: 'input-group filtering-select form-control', name: "attributes[#{header}]", selected: selected, prompt: "Please Select" %></th>
+                        <% else %>
+                          <th>
+                            <% if new_header.include? "primary" or new_header.include? "main" %>
+                              Main Category
+                            <% elsif new_header.include? "sub" %>
+                              Sub Category
+                            <% else %>
+                              Product Category
+                            <% end %>
+                          </th>
+                        <% end %>
+                      <% else %>
+                        <th><%= select_tag :attribute, options_for_select(@attributes, 'style'), class: 'input-group filtering-select form-control', name: "attributes[#{header}]", selected: 'style', prompt: "Please Select" %></th>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% @csv.each_with_index do |row, index| %>
+                  <tr>
+                    <td><%= link_to 'View', brand_item_details_path(row: row.to_h.to_s), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "item-link", onClick: "return appendUrl('#{index}', this);"} %></td>
+                    <% @csv.headers.each do |name| %>
+                      <% unless name.blank? %>
+                        <% new_name = name.downcase %>
+                        <td>
+                          <% unless new_name.include? "category" %>
+                            <%= row[name].truncate(60) unless row[name].blank? %>
+                          <% else %>
+                            <% if new_name.include? "primary" or new_name.include? "main" %>
+                              <%= select_tag :category_id, options_for_select(@categories.map{|c| [c.name, c.id]}), class: 'input-group filtering-select col-sm-2 form-control', name: 'category_id[]', id: "category_id_#{index}", required: true, data: { remote: true, url: url_for(action: "change_catg", index: index)} %>
+                            <% elsif new_name.include? "sub" %>
+                              <span id="sub_catg_<%= index %>"><%= render partial: 'sub_categories', locals: {index: index} %></span>
+                            <% else %>
+                              <span id="prod_catg_<%= index %>"><%= render partial: 'product_categories', locals: {index: index} %></span>
+                            <% end %>
+                          <% end %>
+                        </td>
+                      <% end %>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+          <div class="col-md-4 col-md-offset-4 text-center marg-top-20">
+            <%= submit_tag 'Save', class: "styled-btn" %>
+          </div>
+        </div>
+        <!-- /.box -->
+      </div>
+    </div>
+    <!-- /.row -->
+  <% end %>
+</section>
+
+<div class="modal fade" id="modal-window" tabindex="-2" role="dialog" aria-labelledby="Item Preview"></div>
+
+<div class="modal" id="myModal">
+	<%#= render partial: 'csv_preview' %>
+</div>
+
+<script>
+  $('.item-link1').click(function(){
+    $(this).attr('href', function() {
+      return this.href + '&cylnders=12';
+    });
+  });
+
+  function appendUrl(index, ele){
+    //catg = $("#category_id_"+index+" option:selected").text()
+    //sub_catg = $("#sub_category_id_"+index+" option:selected").text()
+    //prod_catg = $("#product_category_id_"+index+" option:selected").text()
+    catg = $("#category_id_"+index).val()
+    sub_catg = $("#sub_category_id_"+index).val()
+    prod_catg = $("#product_category_id_"+index).val()
+    $(ele).attr('href', function() {
+      str = '&catg='+catg+'&sub_catg='+sub_catg+'&prod_catg='+prod_catg
+      return this.href + str;
+    });
+  }
+</script>

@@ -1,0 +1,236 @@
+<%= javascript_include_tag 'typeahead.bundle.min' %>
+
+<% if params[:action] == "catg_items" %>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>Market</h1>
+    <ol class="breadcrumb">
+      <% if !params[:prod_catg_id].blank? %>
+        <li><%= link_to params[:catg_id].gsub('-',' ').humanize, seller_catg_items_path(catg_id: params[:catg_id]) %></li>
+        <li><%= link_to params[:sub_catg_id].gsub('-',' ').humanize, seller_sub_catg_items_path(catg_id: params[:catg_id], sub_catg_id: params[:sub_catg_id]) %></li>
+        <li class="active"><%= params[:prod_catg_id].gsub('-',' ').humanize %></li>
+      <% elsif !params[:sub_catg_id].blank? %>
+        <li><%= link_to params[:catg_id].gsub('-',' ').humanize, seller_catg_items_path(catg_id: params[:catg_id]) %></li>
+        <li class="active"><%= params[:sub_catg_id].gsub('-',' ').humanize %></li>
+      <% else %>
+        <li class="active"><%= params[:catg_id].gsub('-',' ').humanize %></li>
+      <% end %>
+    </ol>
+  </section>
+<% end %>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row marginT50px">
+    <div class="col-xs-12">
+      <div class="container-fluid">
+        <div class="col-md-2 col-md-offset-2">
+          <div id="magik-verticalmenu" class="block magik-verticalmenu">
+            <div class="nav-title"> <span> Categories <i class="fa fa-angle-down arrow-down pull-right"></i> <i class="fa fa-angle-up arrow-up pull-right"></i></span> </div>
+            <div class="nav-content">
+              <div class="navbar navbar-inverse">
+                <div id="verticalmenu" class="verticalmenu" role="navigation">
+                  <div class="navbar">
+                    <div class="collapse navbar-collapse navbar-ex1-collapse" id="categories">
+                      <ul class="nav navbar-nav verticalmenu">
+                        <% Category.main.each do |catg| %>
+                          <% sub_catgs = catg.sub_categories.joins(:sub_items).where("items.id is not null").distinct.order('name') %>
+                          <li class="<%= 'parent dropdown' unless sub_catgs.blank? %>">
+                            <%= link_to seller_catg_items_path(catg_id: catg.slug) do %>
+                              <div class="row">
+                                <div class="col-md-10 col-lg-10"><span class="menu-title OverflowText"><%= catg.name %></span></div>
+                              </div>
+                            <% end %>
+                            <% unless sub_catgs.blank? %>
+                              <div id="sub-menu" class="dropdown-menu" style="width: 680px;height: 390px;overflow-x:hidden;overflow-y:auto;">
+                                <div class="dropdown-menu-inner" style="">
+                                  <div class="row margin-btm20">
+                                    <% sub_catgs.each do |sub_catg| %>
+                                      <% prod_catgs = sub_catg.product_categories.joins(:items).where("items.id is not null").distinct.order('name') %>
+                                      <div class="mega-col col-sm-66" data-widgets="wid-5" data-colwidth="6">
+                                        <div class="mega-col-inner">
+                                          <div class="ves-widget">
+                                            <div class="menu-title">
+                                              <%= link_to seller_sub_catg_items_path(catg_id: catg.slug, sub_catg_id: sub_catg.slug) do %>
+                                                <span class="SubmenuTitle"><%= sub_catg.name %></span>
+                                              <% end %>
+                                            </div>
+                                            <% unless prod_catgs.blank? %>
+                                              <div class="widget-html">
+                                                <div class="widget-inner">
+                                                  <ul>
+                                                    <% prod_catgs.each do |prod_catg| %>
+                                                      <li><%= link_to prod_catg.name, seller_product_catg_items_path(catg_id: catg.slug, sub_catg_id: sub_catg.slug, prod_catg_id: prod_catg.slug) %></li>
+                                                    <% end %>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            <% end %>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    <% end %>
+                                  </div>
+                                </div>
+                              </div>
+                            <% end %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <!-- Search Form -->
+          <%= form_tag seller_search_market_items_path, remote: true do %>
+            <!-- Search Field -->
+            <div class="row">
+              <div class="form-group">
+                <!-- typehead search -->
+                <div id="remote">
+                  <%= text_field_tag :search_term, '', class: "typeahead form-control", placeholder: "Search and Start Saving" %>
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary search-box-btn" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"><span style="margin-left:10px;"></span></button>
+                  </span>
+                </div>
+                <!-- End typehead search -->
+              </div>
+            </div>
+          <% end %>
+          <!-- End of Search Form -->
+        </div>
+      </div>
+      <div class="container-fluid margin20">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-8 marginB20">
+            <div class="sorting-panel">
+
+              <div class="sort-body inline-block bg-white border border-brand font-bold pull-right">
+                <a href="#" class="item py1 px2 inline-block border-right border-brand selected"><div class="text">Relevance</div></a>
+                <a href="#" class="item py1 px2 inline-block border-right border-brand"><div class="text">Top Rated</div></a>
+                <a href="#" class="item py1 px2 inline-block border-right border-brand"><div class="text">$ ↓</div></a>
+                <a href="#" class="item py1 px2 inline-block"><div class="text">$$$ ↓</div></a>
+              </div>
+              <div class="font-bold p1 inline-block sort">
+                <span>Sort by </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="col-md-2 paddingR">
+
+          <!-- Start Sidebar -->
+          <div class="sidebar sidebar-filter">
+            <%= render partial: 'sidebar' %>
+          </div>
+          <!-- end Sidebar -->
+        </div>
+
+        <div class="col-md-10 item-boxes" id="items-list">
+          <%= render partial: 'items' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+  <!-- Main row -->
+  <div class="row">
+    <!-- Left col -->
+
+    <!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+    <!-- right col -->
+  </div>
+  <!-- /.row (main row) -->
+
+</section>
+<!-- /.content -->
+
+<a id="back-to-top" href="#" class="btn btn-primary btn-top btn-lg back-to-top" role="button">
+  <span class="glyphicon glyphicon-chevron-up"></span>
+</a>
+
+<script>
+  var searchItems = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    identify: function(obj) { return obj.title; },
+    prefetch: '/marketplace/typehead-search-items.json',
+    remote: {
+      url: '/marketplace/typehead-search-items.json?search_term=%QUERY',
+      wildcard: '%QUERY'
+    }
+  });
+
+  $('#remote .typeahead').typeahead({
+    minLength: 0,
+    highlight: true
+  },
+  {
+    name: 'search-items',
+    display: 'title',
+    source: searchItems,
+    templates: {
+      empty: [
+        '<p><strong>',
+          'unable to find any Items that match the current query',
+        '</strong></p>'
+      ].join('\n'),
+      suggestion: function(data) {
+        return '<p onclick="submitForm(\'' + data.title + '\');"><strong>' + data.title + '</strong> – ' + data.brand + '<span>'+ data.style +'</p>';
+      }
+    }
+  });
+
+  function submitForm(title){
+    $.ajax({
+      url:  "/marketplace/search-items",
+      type: "POST",
+      data : {
+        search_term: title
+      },
+      success: function(data){
+      }
+    });
+  }
+</script>
+
+<script>
+  jQuery(function(){
+    amazonmenu.init({
+      menuid: 'mysidebarmenu'
+    })
+  })
+</script>
+
+<script>
+  $(document).ready(function(){
+    $(window).scroll(function () {
+      if ($(this).scrollTop() > 50) {
+          $('#back-to-top').fadeIn();
+      } else {
+          $('#back-to-top').fadeOut();
+      }
+    });
+    // scroll body to 0px on click
+    $('#back-to-top').click(function () {
+      $('#back-to-top').tooltip('hide');
+      $('body,html').animate({
+          scrollTop: 0
+      }, 800);
+      return false;
+    });
+
+    $('#back-to-top').tooltip('show');
+  });
+</script>
+
+<div class="modal fade" id="modal-window" tabindex="-2" role="dialog" aria-labelledby="Item Details"></div>

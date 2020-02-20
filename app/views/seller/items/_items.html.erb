@@ -1,0 +1,46 @@
+<div class="box-body">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th><%= (params[:discontinued].blank? or params[:discontinued].to_s == "false") ? "Discontinue" : "Add to Store" %></th>
+        <th>Item</th>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Item Number</th>
+        <th>Upc</th>
+        <th>Price</th>
+        <th>Commission</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @seller_items.each do |item| %>
+        <%# item = seller_item.item %>
+        <% image = item.images[0] %>
+        <tr>
+          <td>
+            <%#= link_to '<i class="fa fa-eye" aria-hidden="true"></i>'.html_safe, seller_item_details_path(id: item.id, home: true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+            <%= link_to 'Discontinue', seller_initiate_discontinue_item_path(id: item.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "item-link"} if params[:discontinued].blank? or params[:discontinued].to_s == "false" %>
+            <%= link_to 'Add to Store', seller_add_item_to_store_path(id: item.id), {:remote => true, class: "item-link"} if params[:discontinued].to_s == "true" %>
+          </td>
+          <td class="item-img">
+            <% unless image.blank? %>
+              <%= link_to image_tag(image.file.url, alt: item.title), seller_item_details_path(id: item.id, home: true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+            <% else %>
+              <%= link_to image_tag('No_Image_Available.jpg', alt: item.title), seller_item_details_path(id: item.id, home: true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+            <% end %>
+          </td>
+          <td class="item-name"><%= item.title %></td>
+          <td><%= item.brand %></td>
+          <td><%= item.item_number %></td>
+          <td><%= item.upc %></td>
+          <td><%= number_to_currency(item.price) %></td>
+          <td><%= number_to_currency(item.commission_in_currency) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<!-- /.box-body -->
+<div class="text-center items-paging">
+  <%= will_paginate @seller_items %>
+</div>

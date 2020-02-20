@@ -1,0 +1,25 @@
+<% unless params[:brands].blank? %>
+  <div class="selection gray-bottom">
+    <span>Your Selection</span>
+    <%= link_to 'Clear all', seller_marketplace_path, class: 'fr special clear smaller' %>
+  </div>
+  <div class="collapse-box">
+    <% params[:brands].each do |brand_id| %>
+      <% brand = BrandDetail.find(brand_id) %>
+      <%= link_to '#', 'data-type': "brands", class: "item py1 relative inline-block", data_value: brand.company_name.gsub(' ', '_') do %>
+        <span class="font-bold cross">x</span><span class="pl1 pr2"><%= brand.company_name %></span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+
+<script>
+  $('.inline-block').click(function(){
+    val = $(this).attr('data_value');
+    console.log(val);
+    $('#'+val).attr('checked', false);
+    $('#search-form').submit();
+    return false;
+  });
+</script>

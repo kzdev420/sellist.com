@@ -1,0 +1,1 @@
+<%= select_tag(:state, options_for_select(CS.states(@country).map { |key, value| [value, key] }), prompt: "State/Povince", name: "user[state]") %>

@@ -1,0 +1,66 @@
+<header class="main-header">
+  <!-- Logo -->
+  <%= link_to image_tag('logo.svg', alt: "logo"), '/', class: 'logo' %>
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+    <% unless current_user.profile_pic.blank? %>
+      <% img = current_user.profile_pic.url %>
+    <% else %>
+      <% img = 'user-default.jpg' %>
+    <% end %>
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <%= image_tag(img, alt: current_user.first_name, class: "user-image") %>
+            <span class="hidden-xs"><%= current_user.first_name %></span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+              <%= image_tag(img, alt: current_user.first_name, class: "img-circle") %>
+              <p>
+                <%= current_user.first_name %>
+              </p>
+            </li>
+            <!--<li class="user-body">
+              <div class="row">
+                <div class="col-xs-4 text-center">
+                  <a href="#">Dashboard</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                  <a href="#">Marketplace</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                  <a href="#">Store</a>
+                </div>
+              </div>
+            </li>-->
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <div class="pull-left">
+                <% if current_user.brand %>
+                  <%= link_to 'Profile', '/settings', class: "btn btn-default btn-flat" %>
+                <% else %>
+                  <%= link_to 'Profile', '/profile', class: "btn btn-default btn-flat" %>
+                <% end %>
+              </div>
+              <div class="pull-right">
+                <%= link_to 'Sign out', '/users/sign_out', method: 'delete', class: "btn btn-default btn-flat" %>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<div id="flash-messages">
+  <%= render partial: 'shared/flash_messages' %>
+</div>

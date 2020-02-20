@@ -1,0 +1,81 @@
+
+a {
+  text-decoration: none;
+}
+
+#contentWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#contentLeft {
+  z-index: 10;
+  width: 250px;
+  height: 100%;
+  position: relative;
+  top: 100px;
+  left: 0;
+  background-color: #f7f7f7;
+}
+#contentRight {
+  padding: 1.3rem 2rem;
+  margin-left: 250px;
+}
+
+#leftNavigation {
+  margin: 2rem 0;
+}
+#leftNavigation, #leftNavigation li ul {
+  list-style: none;
+  padding: 0;
+}
+#leftNavigation li a {
+  font-size: 15px;
+  display: block;
+  padding: 12px 43px;
+  color: #333;
+  border-bottom: solid 1px #e7e7e7;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+  -webkit-transition: color 0.2s ease;
+  transition: color 0.2s ease;
+}
+#leftNavigation li a, #leftNavigation li a .leftNavIcon {
+  line-height: 120%;
+}
+#leftNavigation li a .leftNavIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 43px;
+  padding: 11px 14px;
+  text-align: center;
+}
+#leftNavigation li a:hover {
+  color: #333;
+}
+#leftNavigation li ul {
+  display: none;
+  margin: 0;
+  background-color: #17232f;
+}
+#leftNavigation li ul li a {
+  border-bottom: solid 1px #233547;
+}
+#leftNavigation li ul li:last-child a {
+  border-bottom: none;
+}
+#leftNavigation li ul li.active a {
+  color: white;
+}
+#leftNavigation li.active > a {
+  color: white;
+  background: #0cd4d2;
+}
+#leftNavigation li.active ul {
+  display: block;
+}
+#leftNavigation > li.active {
+  background-color: #427c97;
+}

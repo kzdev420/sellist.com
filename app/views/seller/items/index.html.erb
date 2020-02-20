@@ -1,0 +1,128 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>Store</h1>
+  <ol class="breadcrumb">
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row marginT30px">
+    <div class="col-xs-12">
+      <div class="container-fluid">
+        <div class="col-md-2 col-md-offset-2">
+          <div id="magik-verticalmenu" class="block magik-verticalmenu">
+            <div class="nav-title"> <span> Categories <i class="fa fa-angle-down arrow-down pull-right"></i> <i class="fa fa-angle-up arrow-up pull-right"></i></span> </div>
+            <div class="nav-content">
+              <div class="navbar navbar-inverse">
+                <div id="verticalmenu" class="verticalmenu" role="navigation">
+                  <div class="navbar">
+                    <div class="collapse navbar-collapse navbar-ex1-collapse" id="categories">
+                      <ul class="nav navbar-nav verticalmenu">
+                        <% @categories.each do |catg| %>
+                          <% sub_catgs = catg.sub_categories.where("id in (?)", @sub_categories).order('name') %>
+                          <li class="<%= 'parent dropdown' unless sub_catgs.blank? %>">
+                            <%= link_to seller_update_items_list_path(catg_id: catg.slug), remote: true do %>
+                              <div class="row">
+                                <div class="col-md-10 col-lg-10"><span class="menu-title OverflowText"><%= catg.name %></span></div>
+                              </div>
+                            <% end %>
+                            <% unless sub_catgs.blank? %>
+                              <div id="sub-menu" class="dropdown-menu" style="width: 680px;height: 390px;overflow-x:hidden;overflow-y:auto;">
+                                <div class="dropdown-menu-inner" style="">
+                                  <div class="row margin-btm20">
+                                    <% sub_catgs.each do |sub_catg| %>
+                                      <% prod_catgs = sub_catg.product_categories.where("id in (?)", @prod_categories).order('name') %>
+                                      <div class="mega-col col-sm-66" data-widgets="wid-5" data-colwidth="6">
+                                        <div class="mega-col-inner">
+                                          <div class="ves-widget">
+                                            <div class="menu-title">
+                                              <%= link_to seller_update_items_list_path(catg_id: catg.slug, sub_catg_id: sub_catg.slug), remote: true do %>
+                                                <span class="SubmenuTitle"><%= sub_catg.name %></span>
+                                              <% end %>
+                                            </div>
+                                            <% unless prod_catgs.blank? %>
+                                              <div class="widget-html">
+                                                <div class="widget-inner">
+                                                  <ul>
+                                                    <% prod_catgs.each do |prod_catg| %>
+                                                      <li><%= link_to prod_catg.name, seller_update_items_list_path(catg_id: catg.slug, sub_catg_id: sub_catg.slug, prod_catg_id: prod_catg.slug), remote: true %></li>
+                                                    <% end %>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            <% end %>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    <% end %>
+                                  </div>
+                                </div>
+                              </div>
+                            <% end %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <!-- Search Form -->
+          <%= form_tag seller_update_items_list_path, remote: true do %>
+            <%= hidden_field_tag :discontinued, false %>
+            <!-- Search Field -->
+            <div class="row">
+              <div class="form-group">
+                <!-- typehead search -->
+                <div id="remote">
+                  <%= text_field_tag :search_term, '', class: "typeahead form-control", placeholder: "Search! I am really really fast" %>
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary search-box-btn" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"><span style="margin-left:10px;"></span></button>
+                  </span>
+                </div>
+                <!-- End typehead search -->
+              </div>
+            </div>
+          <% end %>
+          <!-- End of Search Form -->
+        </div>
+      </div>
+
+      <ul class="nav nav-tabs">
+        <li class="active"><%= link_to 'Selling', seller_update_items_list_path(discontinued: false, clear: true), remote: true %></li>
+        <li><%= link_to 'Discontinued', seller_update_items_list_path(discontinued: true, clear: true), remote: true %></li>
+      </ul>
+      <div class="box" id="items-list">
+        <!-- /.box-header -->
+        <%= render partial: 'items' %>
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+  <!-- /.row -->
+  <!-- Main row -->
+  <div class="row">
+    <!-- Left col -->
+
+    <!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+    <!-- right col -->
+  </div>
+  <!-- /.row (main row) -->
+
+</section>
+<!-- /.content -->
+
+<div class="modal fade" id="modal-window" tabindex="-2" role="dialog" aria-labelledby="Item Preview"></div>
+
+<script>
+  $('.nav-tabs a').click(function(){
+    $('.nav-tabs li').removeClass('active');
+    $(this).parent().addClass('active');
+  })
+</script>

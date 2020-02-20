@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="row bs-wizard" style="border-bottom:0;">
+        <div class="col-xs-4 bs-wizard-step complete">
+          <div class="text-center bs-wizard-number">1</div>
+          <div class="text-center bs-wizard-stepnum">Credentials</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a href="#" class="bs-wizard-dot"></a>
+        </div>
+
+        <div class="col-xs-4 bs-wizard-step complete white-dot"><!-- complete -->
+          <div class="text-center bs-wizard-number">2</div>
+          <div class="text-center bs-wizard-stepnum" id="account-type-head">Seller Identity</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a href="#" class="bs-wizard-dot"></a>
+        </div>
+
+        <div class="col-xs-4 bs-wizard-step complete white-dot"><!-- active -->
+          <div class="text-center bs-wizard-number">7</div>
+          <div class="text-center bs-wizard-stepnum">Activate</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a href="#" class="bs-wizard-dot"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="tell-identity">
+      <h3>Create a login</h3>
+      <p class="subtitle">Select a division, Then use a secure email and create a passphrase. A passphrase is a short sentence that only you would put together and its way more secure than a password.</p>
+      <%= form_for(@user, as: resource_name, url: initialize_user_path(resource_name), validate: true) do |f| %>
+        <div class="form-group">
+          <%= f.select(:account_type, options_for_select(User.roles)) %>
+        </div>
+        <div class="form-group">
+          <div class="input-box">
+            <%= f.email_field :email, class: "form-control", placeholder: "Email Address" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-box">
+            <%= f.password_field :password, class: "form-control", placeholder: "Create a Passphrase", autocomplete: "off" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-box">
+            <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Passphrase", autocomplete: "off" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Next", class: "continue-btn" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#user_account_type').change(function(){
+    type = $(this).val().toUpperCase();
+    $('#account-type-head').html(type + ' Identity');
+  });
+
+  $("#new_user").validate({
+    wrapper: 'span',
+    rules: {
+      "user[email]": {required: true, email: true, remote: "/users/check_email" },
+      "user[password]": {required: true, minlength: 6},
+      "user[password_confirmation]": {required: true, equalTo: "#user_password"}
+     },
+    messages:{
+      "user[email]":{required: "*Email can't be blank", remote: 'Email Already Exist!'},
+      "user[password]":{required: "*Password can't be blank", minlength: "Password length should be minimum 6"},
+      "user[password_confirmation]": {required: "Password Confirmation can't be blank", equalTo: "Password doesn't match"}
+    }
+  });
+</script>

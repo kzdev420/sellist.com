@@ -1,0 +1,5 @@
+<% if params[:profile].blank? %>
+  $('#country-states').html("<%= escape_javascript(render :partial => 'states') %>");
+<% else %>
+  $('#country-states').html("<%= escape_javascript(render :partial => 'shared/user_states') %>");
+<% end  %>

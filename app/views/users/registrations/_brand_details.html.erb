@@ -1,0 +1,162 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="row bs-wizard" style="border-bottom:0;">
+        <div class="col-xs-4 bs-wizard-step complete">
+          <div class="text-center bs-wizard-number">1</div>
+          <div class="text-center bs-wizard-stepnum">Credentials</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <%= link_to '', "javascript:history.back()", class: "bs-wizard-dot" %>
+        </div>
+
+        <div class="col-xs-4 bs-wizard-step complete complete"><!-- complete -->
+          <div class="text-center bs-wizard-number">2</div>
+          <div class="text-center bs-wizard-stepnum">Brand Identity</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a href="#" class="bs-wizard-dot"></a>
+        </div>
+
+        <div class="col-xs-4 bs-wizard-step complete white-dot"><!-- active -->
+          <div class="text-center bs-wizard-number">7</div>
+          <div class="text-center bs-wizard-stepnum">Activate</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a href="#" class="bs-wizard-dot"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="tell-identity">
+      <h3>Tell us about yourself</h3>
+      <p class="subtitle">We need just a little bit more info to setup your account.</p>
+      <%= form_for(@user, url: registration_path(@user)) do |f| %>
+        <%= f.hidden_field :email %>
+        <%= f.hidden_field :password %>
+        <%= f.hidden_field :password_confirmation %>
+        <%= f.hidden_field :account_type %>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <div class="row">
+              <div class="col-md-6 pad-R5 m-margin-btm">
+                <%= f.text_field :first_name, class: "form-control", placeholder: "First Name" %>
+              </div>
+              <div class="col-md-6 pad-L5">
+                <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name" %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <%= text_field_tag :company_name, '', class: "form-control", placeholder: "Your Company Name" %>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <%= text_field_tag :ein, '', class: "form-control", placeholder: "EIN" %>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <%= text_field_tag :web_address, '', class: "form-control", placeholder: "Web Address" %>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <%= text_field_tag :annual_revenue, '', class: "form-control", placeholder: "What's Your Annual Revenue?" %>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <%= f.text_field :address, class: "form-control", placeholder: "Street" %>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <%= f.text_field :suit, class: "form-control", placeholder: "Suite" %>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <div class="row">
+              <div class="col-md-6 pad-R5 m-margin-btm">
+                <%= f.text_field :city, class: "form-control", placeholder: "City" %>
+              </div>
+              <div class="col-md-6 pad-L5" id="country-states">
+                <%= render partial: 'states' %>
+              </div>
+            </div>
+          </div>
+        </div>
+         <div class="form-group clearfix">
+          <div class="input-box">
+            <div class="row">
+              <div class="col-md-6 pad-R5 m-margin-btm">
+                <%= f.text_field :postal_code, class: "form-control", placeholder: "Zip/Postal Code" %>
+              </div>
+              <div class="col-md-6 pad-L5">
+                <%= f.select(:country, options_for_select(CS.countries.map { |key, value| [value, key] }, 'US'), prompt: "Country") %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.submit 'Submit', class: "continue-btn" %>
+        </div>
+      <% end %>
+      <p class="never-shared">*All information is kept Confidential and is never shared.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  $.validator.addMethod('validUrl', function(value, element) {
+      var url = $.validator.methods.url.bind(this);
+      return url(value, element) || url('http://' + value, element);
+  }, 'Please enter a valid URL');
+
+  $("#new_user").validate({
+    wrapper: 'span',
+    rules: {
+      "user[first_name]": {required: true },
+      "user[last_name]": {required: true },
+      "company_name": {required: true },
+      "ein": {required: true },
+      "web_address": {required: true, validUrl: true },
+      "annual_revenue": {required: true, number: true },
+      "user[address]": {required: true },
+      "user[city]": {required: true },
+      "user[state]": {required: true },
+      "user[country]": {required: true },
+      "user[postal_code]": {required: true, number: true }
+     },
+    messages:{
+      "user[first_name]": {required: "First Name can't be blank" },
+      "user[last_name]": {required: "Last Name can't be blank" },
+      "company_name": {required: "Company Name can't be blank" },
+      "ein": {required: "EIN can't be blank" },
+      "web_address": {required: "Web Address can't be blank", url: "Not a valid Web Address" },
+      "annual_revenue": {required: "Annual Revenue can't be blank", number: "Please enter valid revenue" },
+      "user[address]": {required: "Address can't be blank" },
+      "user[city]": {required: "City can't be blank" },
+      "user[state]": {required: "State can't be blank" },
+      "user[country]": {required: "Country can't be blank" },
+      "user[postal_code]": {required: "Postal Code can't be blank", number: "Invalid Postal Code" }
+    }
+  });
+
+  $("#user_country").change(function(){
+    country = $(this).val();
+    $.ajax({
+      url:  "/users/change_states",
+      type: "Get",
+      data : {
+        country: country
+      },
+      dataType: "script",
+    });
+  })
+</script>

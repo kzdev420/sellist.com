@@ -1,0 +1,85 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1 class="text-center">Upload Item Photography</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="box">
+        <div class="box-body">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td class="pd-bottom30">
+                  <div class="text-center">
+                    <p class="font-15">Here you can bulk import your items photos, download the item folders, match your photos with the item number on the folders and upload. You can also add them one by one if you only have a few items.</p>
+                    <%= link_to 'Download Folders', brand_download_items_zip_path, class: 'styled-btn marginT10', download: true %>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <%= form_tag brand_upload_item_images_path, multipart: true do %>
+                  <td class="pd-top30">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <%= text_field_tag :images_file_name, '', class: 'form-control', disabled: true %><br/>
+                      </div>
+                      <div class="col-md-3">
+                        <%= submit_tag 'Import', class: "btn btn-block btn-primary" %>
+                      </div>
+                      <div class="col-md-8">
+                        <label class="styled-btn pull-right">
+                          Browse… <%= file_field_tag :image_file, value: "upload", accept: 'application/zip', style: "display: none;", required: true %>
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Small boxes (Stat box) -->
+  <div class="row marginT30px">
+    <div class="col-xs-12">
+      <div class="box" id="items-list">
+        <%= render partial: 'index' %>
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+  <!-- /.row -->
+  <!-- Main row -->
+  <div class="row">
+    <!-- Left col -->
+
+    <!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+    <!-- right col -->
+  </div>
+  <!-- /.row (main row) -->
+
+</section>
+<!-- /.content -->
+
+<div class="modal fade" id="modal-window" tabindex="-2" role="dialog" aria-labelledby="Item Preview"></div>
+
+<div class="modal" id="myModal"></div>
+
+
+<script>
+  $(function($) {
+    $('#image_file').change(function() {
+      if ($(this).val()) {
+         var filename = $(this).val().split('\\').pop(-1);
+         $("#images_file_name").val(filename);
+       }
+    });
+  });
+</script>

@@ -1,0 +1,24 @@
+
+<% @categories = Category.where("parent_id is not null") %>
+
+<div id="sub_category_select">
+  <%= render partial: 'sub_category_select' %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#product_category_category_id').change(function(){
+      //catg_id = $("#product_category_category option:selected").text();
+      catg_id = $(this).val();
+      $.ajax({
+        url:  "/change_category",
+        type: "Get",
+        data : {
+          catg_id: catg_id
+        },
+        dataType: "script",
+      });
+    })
+    //whatever you would like to do to the form here
+  });
+</script>

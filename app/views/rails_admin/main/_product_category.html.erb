@@ -1,0 +1,58 @@
+<%= form_tag create_product_category_path, class: "form-horizontal denser", 'data-title': "New Product category", id: "new_product_category", html: {multipart: true} do %>
+  <fieldset>
+    <legend style="display:none"><i class="icon-chevron-down"></i> Basic info</legend>
+
+    <div class="form-group control-group string_type name_field " id="product_category_name_field">
+      <%= label_tag :name, 'Product Category', class: "col-sm-2 control-label" %>
+      <div class="col-sm-10 controls">
+        <%= text_field_tag :name, '', class: "form-control", required: "required", size: "50" %>
+        <span class="help-block">Required. </span>
+      </div>
+    </div>
+  </fieldset>
+<% end %>
+
+
+<form class="form-horizontal denser" data-title="New Product category" id="new_product_category" enctype="multipart/form-data" action="/admin/product_category/new" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="MA5Yjxuvjbxik6tQUuL00tkj2slKm7GBwTK9YRaUNYPCBBy08EP61ntGsIv4M1KWspFNUnFI1BVZlpcujuHRxA==">
+  <span style="display:none" class="object-infos" data-model-label="Product category" data-object-label="Product category (new)"></span>
+  <fieldset>
+    <legend style="display:none"><i class="icon-chevron-down"></i> Basic info</legend>
+    <div class="form-group control-group string_type name_field " id="product_category_name_field">
+      <label class="col-sm-2 control-label" for="product_category_name">Product Category</label>
+      <div class="col-sm-10 controls">
+        <input class="form-control" required="required" size="50" type="text" name="product_category[name]" id="product_category_name">
+        <span class="help-block">Required. </span>
+      </div>
+    </div>
+    <div class="form-group control-group text_type description_field " id="product_category_description_field"><label class="col-sm-2 control-label" for="product_category_description">Description</label><div class="col-sm-10 controls"><textarea class="form-control" data-richtext="false" data-options="{}" cols="48" rows="3" name="product_category[description]" id="product_category_description"></textarea>
+        <span class="help-block">Optional. </span></div></div><div class="form-group control-group belongs_to_association_type category_field " id="product_category_category_id_field"><label class="col-sm-2 control-label" for="product_category_category_id">Category</label><div class="col-sm-10 controls"><select data-filteringselect="true" data-options="{&quot;xhr&quot;:true,&quot;remote_source&quot;:&quot;/admin/category?associated_collection=category\u0026compact=true\u0026current_action=create\u0026source_abstract_model=product_category&quot;}" placeholder="Search" required="required" name="product_category[category_id]" id="product_category_category_id" style="display: none;"><option value=""></option>
+<option value=""></option></select><div class="input-group filtering-select col-sm-2" data-input-for="product_category_category_id" style="float: left;"><input type="text" class="form-control ra-filtering-select-input ui-autocomplete-input" style="display: inline-block;" placeholder="Search" autocomplete="off"><span class="input-group-btn"><label class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Show All Items" role="button"><span class="caret"></span><span class="ui-button-text">&nbsp;</span></label></span></div>
+<a data-link="/admin/category/new?modal=true" class="btn btn-info create" style="margin-left:10px" href="#"><i class="icon-plus icon-white"></i> Add a new Category</a>
+<a data-link="/admin/category/__ID__/edit?modal=true" class="btn btn-info update disabled" style="margin-left:10px" href="#"><i class="icon-pencil icon-white"></i> Edit this Category</a>
+<span class="help-block">Required. </span></div></div><div class="form-group control-group belongs_to_association_type sub_category_field " id="product_category_sub_category_id_field"><label class="col-sm-2 control-label" for="product_category_sub_category_id">Sub category</label><div class="col-sm-10 controls"><select data-filteringselect="true" data-options="{&quot;xhr&quot;:true,&quot;remote_source&quot;:&quot;/admin/category?associated_collection=sub_category\u0026compact=true\u0026current_action=create\u0026source_abstract_model=product_category&quot;}" placeholder="Search" required="required" name="product_category[sub_category_id]" id="product_category_sub_category_id" style="display: none;"><option value=""></option>
+<option value=""></option></select><div class="input-group filtering-select col-sm-2" data-input-for="product_category_sub_category_id" style="float: left;"><input type="text" class="form-control ra-filtering-select-input ui-autocomplete-input" style="display: inline-block;" placeholder="Search" autocomplete="off"><span class="input-group-btn"><label class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Show All Items" role="button"><span class="caret"></span><span class="ui-button-text">&nbsp;</span></label></span></div>
+<a data-link="/admin/category/new?modal=true" class="btn btn-info create" style="margin-left:10px" href="#"><i class="icon-plus icon-white"></i> Add a new Category</a>
+<a data-link="/admin/category/__ID__/edit?modal=true" class="btn btn-info update disabled" style="margin-left:10px" href="#"><i class="icon-pencil icon-white"></i> Edit this Category</a>
+<span class="help-block">Required. </span></div></div></fieldset><div class="form-group form-actions">
+<div class="col-sm-offset-2 col-sm-10">
+<input name="return_to" type="hidden" value="http://localhost:3001/admin/product_category/new">
+<button class="btn btn-primary" data-disable-with="Save" name="_save" type="submit">
+<i class="icon-white icon-ok"></i>
+Save
+</button>
+<span class="extra_buttons">
+<button class="btn btn-info" data-disable-with="Save and add another" name="_add_another" type="submit">
+Save and add another
+</button>
+<button class="btn btn-info" data-disable-with="Save and edit" name="_add_edit" type="submit">
+Save and edit
+</button>
+<button class="btn btn-default" data-disable-with="Cancel" formnovalidate="" name="_continue" type="submit">
+<i class="icon-remove"></i>
+Cancel
+</button>
+</span>
+</div>
+</div>
+
+</form>

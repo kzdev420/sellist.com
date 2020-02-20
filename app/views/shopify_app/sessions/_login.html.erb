@@ -1,0 +1,31 @@
+<% if params[:step].to_i != 1 and !params[:step].blank? %>
+  <form method="POST" action="/shopify/login">
+    <% if flash[:error] %>
+      <div class=error><%= flash[:error] %></div>
+    <% end %>
+    <div class="add_app text-center">
+      <%= image_tag "shopify.png" %>
+      <% application_name = ShopifyApp.configuration.application_name %>
+      <% @shopify_shop = current_user.brand_detail.shopify_shops.order(:updated_at).last if @shopify_shop.blank? %>
+      <div class="col-right custom">
+        <%= text_field_tag :shop_name, (@shopify_shop.blank? ? '' : @shopify_shop.url.split('.')[0]), autofocus: "autofocus", placeholder: "example" %>
+        <span class="font-size">.myshopify.com</span>
+      </div>
+      <%= hidden_field_tag :shop, (@shopify_shop.blank? ? '' : @shopify_shop.url), autofocus: "autofocus", placeholder: "example.myshopify.com" %>
+      <p>
+        You will be redirected to Shopify to add the <%= application_name%> to Sync your products.
+      </p>
+    </div>
+    <div class="text-right">
+      <button type="submit" class="add_app_btn">Add App</button>
+    </div>
+  </form>
+<% end %>
+
+<script>
+  $("#shop_name").change(function(){
+    name = $(this).val();
+    url = name + '.myshopify.com'
+    $("#shop").val(url);
+  });
+</script>

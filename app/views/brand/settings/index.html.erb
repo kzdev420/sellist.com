@@ -1,0 +1,185 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>Edit Profile</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row marginT30px">
+    <%= form_tag brand_update_settings_path, id: 'profile-form', multipart: true do %>
+      <div class="col-md-3 col-md-offset-1">
+        <div class="box box-primary clearfix">
+          <div class="box-body">
+            <div class="text-center">
+              <span class="profile-pic">
+                <% unless current_user.profile_pic.blank? %>
+                  <% img = current_user.profile_pic.url %>
+                <% else %>
+                  <% img = '/assets/user-default.jpg' %>
+                <% end %>
+                <div class="profile-pic" style="background-image: url(<%= img %>)">
+                  <%= file_field_tag :profile_pic, accept: 'image/*' %>
+                  <span class="glyphicon glyphicon-camera"></span>
+                  <span>Change Image</span>
+                </div>
+              </span>
+            </div>
+            <div class="text-center">
+              <span class="profile-name">Profile Name</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="box box-primary clearfix">
+          <div class="box-body">
+            <div class="form-group clearfix">
+              <div class="col-lg-6">
+                <label>First Name</label>
+                <%= text_field_tag :first_name, current_user.first_name, class: "form-control", placeholder: "First Name" %>
+              </div>
+              <div class="col-lg-6">
+                <label>Last Name</label>
+                <%= text_field_tag :last_name, current_user.last_name, class: "form-control", placeholder: "Last Name" %>
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <div class="col-lg-6">
+                <label>Email</label>
+                <%= email_field_tag :email, current_user.email, class: "form-control", placeholder: "Email" %>
+              </div>
+              <div class="col-lg-6">
+                <label>Phone</label>
+                <%= text_field_tag :phone, current_user.phone, class: "form-control", placeholder: "Phone" %>
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <div class="col-lg-6">
+                <label>Address</label>
+                <%= text_field_tag :address, current_user.address, class: "form-control", placeholder: "Address" %>
+              </div>
+              <div class="col-lg-6">
+                <label>Suit</label>
+                <%= text_field_tag :suit, current_user.suit, class: "form-control", placeholder: "Suit" %>
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <div class="col-lg-6">
+                <label>City</label>
+                <%= text_field_tag :city, current_user.city, class: "form-control", placeholder: "City" %>
+              </div>
+              <div class="col-lg-6">
+                <label>State</label>
+                <span id="country-states">
+                  <%= render partial: 'shared/user_states' %>
+                </span>
+                <%#= text_field_tag :state, current_user.state, class: "form-control", placeholder: "State" %>
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <div class="col-lg-6">
+                <label>Postal Code</label>
+                <%= text_field_tag :postal_code, current_user.postal_code, class: "form-control", placeholder: "Postal Code" %>
+              </div>
+              <div class="col-lg-6">
+                <label>Country</label>
+                <%= select_tag(:country, options_for_select(CS.countries.map { |key, value| [value, key] }, current_user.country), {class: "form-control", prompt: "Country"}) %>
+                <%#= text_field_tag :country, current_user.country, class: "form-control", placeholder: "Country" %>
+              </div>
+            </div>
+            <% brand = current_user.brand_detail %>
+            <div class="form-group clearfix">
+              <div class="col-lg-6">
+                <label>Company Name</label>
+                <%= text_field_tag :company_name, brand.company_name, class: "form-control", placeholder: "Company Name" %>
+              </div>
+              <div class="col-lg-6">
+                <label>EIN</label>
+                <%= text_field_tag :ein, brand.ein, class: "form-control", placeholder: "EIN" %>
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <div class="col-lg-6">
+                <label>Web Address</label>
+                <%= text_field_tag :web_address, brand.web_address, class: "form-control", placeholder: "Web Address" %>
+              </div>
+              <div class="col-lg-6">
+                <label>Annual Revenue</label>
+                <%= text_field_tag :annual_revenue, brand.annual_revenue, class: "form-control", placeholder: "Annual Revenue" %>
+              </div>
+            </div>
+            <div class="col-md-4 col-md-offset-4 text-center">
+              <%= submit_tag 'Save', class: "styled-btn" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <!-- /.row -->
+  <!-- Main row -->
+  <div class="row">
+    <!-- Left col -->
+
+    <!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+    <!-- right col -->
+  </div>
+  <!-- /.row (main row) -->
+
+</section>
+<!-- /.content -->
+
+<script>
+  $.validator.addMethod('validUrl', function(value, element) {
+    var url = $.validator.methods.url.bind(this);
+    return url(value, element) || url('http://' + value, element);
+  }, 'Please enter a valid URL');
+
+  $("#profile-form").validate({
+    wrapper: 'span',
+    rules: {
+      "first_name": {required: true },
+      "last_name": {required: true },
+      "company_name": {required: true },
+      "ein": {required: true },
+      "web_address": {required: true, validUrl: true },
+      "annual_revenue": {required: true, number: true },
+      "address": {required: true },
+      "city": {required: true },
+      "state": {required: true },
+      "country": {required: true },
+      "postal_code": {required: true, number: true },
+      "phone": { number: true, minlength: 6, maxlength: 10 }
+    },
+    messages:{
+      "first_name": {required: "First Name can't be blank" },
+      "last_name": {required: "Last Name can't be blank" },
+      "company_name": {required: "Company Name can't be blank" },
+      "ein": {required: "EIN can't be blank" },
+      "web_address": {required: "Web Address can't be blank", url: "Not a valid Web Address" },
+      "annual_revenue": {required: "Annual Revenue can't be blank", number: "Please enter valid revenue" },
+      "address": {required: "Address can't be blank" },
+      "city": {required: "City can't be blank" },
+      "state": {required: "State can't be blank" },
+      "country": {required: "Country can't be blank" },
+      "postal_code": {required: "Postal Code can't be blank", number: "Invalid Postal Code" },
+      "phone": { number: "Enter valid phone number" }
+    }
+  });
+
+  $("#country").change(function(){
+    country = $(this).val();
+    $.ajax({
+      url:  "/users/change_states",
+      type: "Get",
+      data : {
+        country: country,
+        profile: true
+      },
+      dataType: "script",
+    });
+  });
+</script>

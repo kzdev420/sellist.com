@@ -1,0 +1,11 @@
+<% @apps.each_with_index do |app, index| %>
+  <% if index % 2 == 0 %>
+    <div class="row">
+  <% end %>
+  <div class="col-md-6">
+    <%= link_to image_tag(app.logo.url), "/#{app.name}/login?step=2", remote: true %>
+  </div>
+  <% if (index+1) % 2 == 0 or (index == (@apps.length-1)) %>
+    </div>
+  <% end %>
+<% end %>

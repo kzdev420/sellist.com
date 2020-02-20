@@ -1,0 +1,24 @@
+<div class="box-body">
+  <% @items.each do |item| %>
+    <div class="col-sm-6 col-md-4" id="item-<%= item.id %>">
+      <%= render partial: 'item', locals: {item: item} %>
+    </div>
+  <% end %>
+  <div class="text-center items-paging">
+    <%= will_paginate @items %>
+      <!--<ul class="pagination">
+          <li><a href="#">&larr; Previous</a></li>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#">6</a></li>
+          <li><a href="#">7</a></li>
+          <li><a href="#">8</a></li>
+          <li><a href="#">9</a></li>
+          <li><a href="#">10</a></li>
+          <li><a href="#">Next &rarr;</a></li>
+      </ul>-->
+  </div>
+</div>

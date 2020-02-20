@@ -1,0 +1,23 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h4 class="modal-title"><%= @seller_item.item.title %></h4>
+    </div>
+    <div class="modal-body">
+      <%= form_tag seller_discontinued_item_path, remote: true do %>
+        <%= hidden_field_tag :id, @seller_item.id %>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-8 col-md-offset-2">
+            <label>Add Reason</label>
+            <%= text_area_tag :reason, '', rows: "5", cols: "5", class: 'form-control', placeholder: "Add Reason", required: true %></div>
+          </div>
+          <div class="col-md-4 col-md-offset-4 marginT30px text-center">
+            <%= submit_tag 'Continue', class: "styled-btn" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

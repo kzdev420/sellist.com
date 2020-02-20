@@ -1,0 +1,112 @@
+<%#= form_tag shopify_sync_path(shopify_shop_id: @shopify_shop.id) do %>
+  <div class="products-list-table">
+    <table cellpadding="0" cellspacing="0" class="scroll">
+      <thead>
+        <tr>
+          <th>
+            <label class="check top">Sync
+              <%= check_box_tag :all_products, true, false %>
+              <span class="checkmark"></span>
+            </label>
+          </th>
+          <th></th>
+          <th>Item Name</th>
+          <th>Brand</th>
+          <th>SKU</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |product| %>
+          <% attribs = product.variants[0] %>
+          <tr>
+            <td>
+              <label class="check">
+                <%= check_box_tag :products, product.id, (@old_products.include? product), name: "products[]" %>
+                <span class="checkmark"></span>
+              </label>
+            </td>
+            <td class="product-img">
+              <% image = product.images[0] %>
+              <% unless image.blank? %>
+                <%= image_tag(image.src) %>
+              <% end %>
+            </td>
+            <td><%= product.title %></td>
+            <td><%= product.vendor %></td>
+            <td><%= attribs.sku %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%#= submit_tag :save, class: 'styled-btn marginT10' %>
+<%# end %>
+
+<!-- <script>
+  // Change the selector if needed
+  var $table = $('table.scroll'),
+    $bodyCells = $table.find('tbody tr:first').children(),
+    colWidth;
+
+  // Adjust the width of thead cells when window resizes
+  $(window).resize(function() {
+    // Get the tbody columns width array
+    colWidth = $bodyCells.map(function() {
+      return $(this).width();
+    }).get();
+
+    // Set the width of thead columns
+    $table.find('thead tr').children().each(function(i, v) {
+      $(v).width(colWidth[i]);
+    });
+  }).resize(); // Trigger resize handler
+</script> -->
+
+<script>
+  $('#all_products').change(function(){
+    if($(this).is(":checked")){
+      selected = [];
+      $("tbody").find('input[type=checkbox]').each(function () {
+        this.checked = true;
+        selected.push($(this).val());
+      });
+      $.ajax({
+        url:  "/integrations/sync_shopify",
+        type: "POST",
+        data : {'commit': 'sync', 'products': selected, 'shopify_shop_id': <%= @shopify_shop.id %>},
+        success: function(data){
+        }
+      });
+    }
+    else{
+      $("#all-products").find('input[type=checkbox]').each(function () {
+        this.checked = false;
+      });
+    }
+  });
+
+  $('#all_old_products').change(function(){
+    if($(this).is(":checked")){
+      $("#old-products").find('input[type=checkbox]').each(function () {
+        this.checked = true;
+      });
+    }
+    else{
+      $("#old-products").find('input[type=checkbox]').each(function () {
+        this.checked = false;
+      });
+    }
+  });
+
+  $('.check :checkbox').change(function(){
+    if($(this).attr('name') != 'all_products'){
+      $.ajax({
+        url:  "/integrations/sync_shopify_product",
+        type: "POST",
+        data : { 'shopify_shop_id': <%= @shopify_shop.id %>, id: $(this).val() },
+        success: function(data){
+        }
+      });
+    }
+  })
+</script>

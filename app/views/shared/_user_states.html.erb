@@ -1,0 +1,1 @@
+<%= select_tag(:state, options_for_select(CS.states(@country).map { |key, value| [value, key] }, current_user.state), {class: "form-control", prompt: "State/Povince"}) %>

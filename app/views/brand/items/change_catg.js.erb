@@ -1,0 +1,7 @@
+<% if params[:type].blank? %>
+  $('#sub_catg_<%= params[:index] %>').html("<%= escape_javascript(render :partial => 'sub_categories', locals: {index: params[:index]}) %>");
+  $('#prod_catg_<%= params[:index] %>').html("<%= escape_javascript(render :partial => 'product_categories', locals: {index: params[:index]}) %>");
+<% else %>
+  $('#sub-categories').html("<%= escape_javascript(render :partial => 'sub_categories') %>");
+  $('#product-categories').html("<%= escape_javascript(render :partial => 'product_categories') %>");
+<% end %>

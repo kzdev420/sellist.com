@@ -1,0 +1,14 @@
+<div class="scroll-height">
+  <% @brands.each do |brand| %>
+    <span class="item relative clearfix py1">
+      <div class="filter-style">
+        <div class="checkbox checkbox-circle">
+          <%= check_box_tag :brand, brand.company_name, false, id: brand.company_name, name: 'brand[]' %>
+          <label for="<%= brand.company_name %>">
+            <%= brand.company_name %>
+          </label>
+        </div>
+      </div>
+    </span>
+  <% end %>
+</div>

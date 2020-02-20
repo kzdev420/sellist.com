@@ -1,0 +1,10 @@
+<% if !params[:prod_catg_id].blank? %>
+  <li><%= link_to params[:catg_id].gsub('-',' ').humanize, seller_update_items_list_path(catg_id: params[:catg_id]), remote: true %></li>
+  <li><%= link_to params[:sub_catg_id].gsub('-',' ').humanize, seller_update_items_list_path(catg_id: params[:catg_id], sub_catg_id: params[:sub_catg_id]), remote: true %></li>
+  <li class="active"><%= params[:prod_catg_id].gsub('-',' ').humanize %></li>
+<% elsif !params[:sub_catg_id].blank? %>
+  <li><%= link_to params[:catg_id].gsub('-',' ').humanize, seller_update_items_list_path(catg_id: params[:catg_id]), remote: true %></li>
+  <li class="active"><%= params[:sub_catg_id].gsub('-',' ').humanize %></li>
+<% elsif !params[:catg_id].blank? %>
+  <li class="active"><%= params[:catg_id].gsub('-',' ').humanize %></li>
+<% end %>
