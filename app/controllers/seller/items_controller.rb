@@ -53,7 +53,7 @@ class Seller::ItemsController < Seller::MainController
     end
 
     search = Item.filter(params, session)
-    @seller_items = search.results
+    @seller_items = search.result.page(params[:page]).per(10)
     #@seller_items = current_user.seller_items.where("discontinued = ?", params[:discontinued]).paginate(page: params[:page], per_page: 10)
   end
 end

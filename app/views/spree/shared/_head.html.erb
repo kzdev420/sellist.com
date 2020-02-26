@@ -1,0 +1,18 @@
+<meta charset="utf-8">
+<title><%= title %></title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport">
+<%#= meta_data_tags %>
+<%= canonical_tag(current_store.url) %>
+<%= favicon_link_tag 'favicon.ico' %>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<%= stylesheet_link_tag 'spree/frontend/all', 'spree_style', media: 'screen' %>
+<% if params[:controller].include? "orders" or (params[:controller].include? "products" and params[:action].include? "show") %>
+  <%= stylesheet_link_tag 'bootstrap.min', 'spree_app', media: 'screen' %>
+<% end %>
+<%= csrf_meta_tags %>
+<%= javascript_include_tag 'spree/frontend/all', 'bootstrap.min' %>
+<!--[if lt IE 9]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+<![endif]-->
+<%= yield :head %>

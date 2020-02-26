@@ -55,60 +55,59 @@
 	z-index: 11;
 	background: #f3f3f3;
 }
-	.thumbs-container.top {
-		top: 0;
-	}
-	.thumbs-container.bottom {
-		bottom: 0;
-	}
-	.prev, .next {
-		width: 3%;
-		min-width: 30px;
-		height: 48px;
-		padding: 36px 0%;
+.thumbs-container.top {
+	top: 0;
+}
+.thumbs-container.bottom {
+	bottom: 0;
+}
+.thumbs-container .prev, .thumbs-container .next {
+	width: 3%;
+	min-width: 30px;
+	height: 48px;
+	padding: 36px 0%;
 
-		color: #999999;
-		cursor: pointer;
-	}
-	.prev { float: left; }
-	.next { float: right; }
-		.prev:hover, .next:hover {
-			color: #555555;
-		}
-	ul.thumbs {
-		position: absolute;
-		top: 0;
-		left: 2%;
-		right: 2%;
-		height: 140px;
-		padding: 0;
-		margin: 0 5%;
-		overflow: hidden;
-		white-space: nowrap;
-		text-align: center;
-	}
-		.thumb {
-			display: inline-block;
-			width: 80px;
-			height: 80px;
-			margin: 5px 5px;
-			border: 2px solid #ccc;
-			overflow: hidden;
-			background-size: cover;
-    		background-position: center center;
-
-    		cursor: pointer;
-		}
-			.thumb:first-of-type {
-				margin-left: 0px;
-			}
-		.thumb.active {
-			width: 80px;
-			height: 80px;
-			border: 2px solid #fff;
-		}
-		.item-modal{
-			min-height:535px;
-			max-height: 580px;
-			overflow-y: auto;
-		}
+	color: #999999;
+	cursor: pointer;
+}
+.thumbs-container .prev { float: left; }
+.thumbs-container	.next { float: right; }
+.thumbs-container	.prev:hover, .thumbs-container .next:hover {
+	color: #555555;
+}
+ul.thumbs {
+	position: absolute;
+	top: 0;
+	left: 2%;
+	right: 2%;
+	height: 140px;
+	padding: 0;
+	margin: 0 5%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-align: center;
+}
+.thumb {
+	display: inline-block;
+	width: 80px;
+	height: 80px;
+	margin: 5px 5px;
+	border: 2px solid #ccc;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center center;
+	cursor: pointer;
+}
+.thumb:first-of-type {
+	margin-left: 0px;
+}
+.thumb.active {
+	width: 80px;
+	height: 80px;
+	border: 2px solid #fff;
+}
+.item-modal{
+	min-height:535px;
+	max-height: 580px;
+	overflow-y: auto;
+}

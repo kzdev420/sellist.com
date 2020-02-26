@@ -28,20 +28,22 @@ label.error{color: red;}
 .pagination > li > a, .pagination > li > span{
 	color:#35404f !important;
 }
+.pagination .page {
+  display: inline-block;
+}
 .pagination .current{
   padding: 8px 16px;
   background-color: #0cd4d2;
   color:#fff;
 }
-.pagination a, .pagination span{
+/* .pagination a, .pagination span{ */
+.pagination a {
   padding: 8px 16px;
+  border: solid 1px #ccc;
 }
 .pagination a:hover{
   background-color: #ddd;
-  padding: 8px 16px;
 }
-.pagination a, .pagination span{border: solid 1px #ccc;}
-
 
 /******************* Item Modal **********************/
 
@@ -1475,3 +1477,5 @@ figure {
 .checkbox-inline.head-checkbox{
     vertical-align: text-top;
 }
+
+

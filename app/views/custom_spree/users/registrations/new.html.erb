@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="tell-identity">
+      <h3>Create a login</h3>
+      <p class="subtitle">Select a division, Then use a secure email and create a passphrase. A passphrase is a short sentence that only you would put together and its way more secure than a password.</p>
+      <%= form_for(@user, url: custom_spree_create_user_path, validate: true) do |f| %>
+        <%= f.hidden_field :account_type, value: "buyer" %>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <div class="row">
+              <div class="col-md-6 pad-R5 m-margin-btm">
+                <%= f.text_field :first_name, class: "form-control", placeholder: "First Name" %>
+              </div>
+              <div class="col-md-6 pad-L5">
+                <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-box">
+            <%= f.email_field :email, class: "form-control", placeholder: "Email Address" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-box">
+            <%= f.password_field :password, class: "form-control", placeholder: "Create a Passphrase", autocomplete: "off" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-box">
+            <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Passphrase", autocomplete: "off" %>
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <%= f.text_field :address, class: "form-control", placeholder: "Street" %>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <%= f.text_field :suit, class: "form-control", placeholder: "Suite" %>
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <div class="row">
+              <div class="col-md-6 pad-R5 m-margin-btm">
+                <%= f.text_field :city, class: "form-control", placeholder: "City" %>
+              </div>
+              <div class="col-md-6 pad-L5" id="country-states">
+                <%= render partial: '/users/registrations/states' %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <div class="input-box">
+            <div class="row">
+              <div class="col-md-6 pad-R5 m-margin-btm">
+                <%= f.text_field :postal_code, class: "form-control", placeholder: "Zip/Postal Code" %>
+              </div>
+              <div class="col-md-6 pad-L5">
+                <%= f.select(:country, options_for_select(CS.countries.map { |key, value| [value, key] }, 'US'), prompt: "Country") %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Save", class: "continue-btn" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#new_user").validate({
+    wrapper: 'span',
+    rules: {
+      "user[first_name]": {required: true },
+      "user[last_name]": {required: true },
+      "user[email]": {required: true, email: true, remote: "/check_email" },
+      "user[password]": {required: true, minlength: 6},
+      "user[password_confirmation]": {required: true, equalTo: "#user_password"},
+      "user[address]": {required: true },
+      "user[city]": {required: true },
+      "user[state]": {required: true },
+      "user[country]": {required: true },
+      "user[postal_code]": {required: true }
+     },
+    messages:{
+      "user[first_name]": {required: "First Name can't be blank" },
+      "user[last_name]": {required: "Last Name can't be blank" },
+      "user[email]":{required: "*Email can't be blank", remote: 'Email Already Exist!'},
+      "user[password]":{required: "*Password can't be blank", minlength: "Password length should be minimum 6"},
+      "user[password_confirmation]": {required: "Password Confirmation can't be blank", equalTo: "Password doesn't match"},
+      "user[address]": {required: "Address can't be blank" },
+      "user[city]": {required: "City can't be blank" },
+      "user[state]": {required: "State can't be blank" },
+      "user[country]": {required: "Country can't be blank" },
+      "user[postal_code]": {required: "Zip Code can't be blank" }
+    }
+  });
+
+  $("#user_country").change(function(){
+    country = $(this).val();
+    $.ajax({
+      url:  "/change_states",
+      type: "Get",
+      data : {
+        country: country
+      },
+      dataType: "script",
+    });
+  })
+</script>

@@ -5,7 +5,8 @@
     </div>
   <% end %>
   <div class="text-center items-paging">
-    <%= will_paginate @items %>
+    <%#= will_paginate @items %>
+    <%= paginate @items %>
       <!--<ul class="pagination">
           <li><a href="#">&larr; Previous</a></li>
           <li><a href="#">1</a></li>

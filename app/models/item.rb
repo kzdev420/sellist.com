@@ -12,6 +12,10 @@ class Item < ApplicationRecord
   validates_uniqueness_of :item_number, scope: [:product_category_id, :brand_detail_id, :shopify_shop_id, :sku]
   after_touch :index
 
+  after_commit :add_product_to_spree, if: -> { spree_id.blank? and enabled_for_sale and (saved_change_to_id? or saved_change_to_enabled_for_sale?) }
+  after_commit :update_product_to_spree, if: -> { !spree_id.blank? }
+  before_destroy :remove_product_from_spree, if: -> { !spree_id.blank? }
+
   searchable auto_index: true, auto_remove: true do
     text :name, :title, :upc, :item_number, :description, :style
 
@@ -40,7 +44,7 @@ class Item < ApplicationRecord
   end
 
   def self.filter(params, session, per_page = 40)
-    search do
+    solr_search do
       unless params[:search_term].blank?
         fulltext "#{params[:search_term]}" do
           fields(:name, :title, :item_number, :style)
@@ -69,5 +73,29 @@ class Item < ApplicationRecord
 
   def display_desc
     (self.description.blank? ? '' : self.description.html_safe)
+  end
+
+  def display_name
+    (self.name.blank? ? self.title : self.name)
+  end
+
+  def meta_keywords
+    [self.name, self.title].reject(&:blank?).join(', ')
+  end
+
+  def add_product_to_spree
+    AddProductToSpree.perform_async(self.id)
+  end
+
+  def update_product_to_spree
+    if enabled_for_sale
+      UpdateProductToSpree.perform_async(self.id)
+    elsif !enabled_for_sale and saved_change_to_enabled_for_sale?
+      DisableProductFromSpree.perform_async(self.id)
+    end
+  end
+
+  def remove_product_from_spree
+    RemoveProductFromSpree.perform_async(self.id)
   end
 end

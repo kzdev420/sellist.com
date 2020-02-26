@@ -53,7 +53,7 @@
 <!-- /.box-body -->
 <% if @items.length > 0 %>
   <div class="text-center items-paging">
-    <%= custom_will_paginate(@items, params: {}, remote: true) %>
-    <%#= will_paginate @items %>
+    <%#= custom_will_paginate(@items, params: {}, remote: true) %>
+    <%= paginate @items, params: {}, remote: true %>
   </div>
 <% end %>

@@ -7,6 +7,7 @@ class Seller::MarketplaceController < Seller::MainController
     session[:sub_catg_id] = ''
     session[:prod_catg_id] = ''
     search = Item.filter(params, session)
+    # @items = search.result.page(params[:page]).per(10)
     @items = search.results
   end
 
@@ -39,16 +40,19 @@ class Seller::MarketplaceController < Seller::MainController
     end
     search = Item.filter(params, session)
     @items = search.results
+    # @items = search.result.page(params[:page]).per(10)
   end
 
   def search
     search = Item.filter(params, session)
     @items = search.results
+    # @items = search.result.page(params[:page]).per(10)
   end
 
   def typehead_search
     search = Item.filter(params, session)
     #search = Item.search { fulltext "*#{params[:search_term]}*" }
+    # items = search.result.page(params[:page]).per(10)
     items = search.results
     new_items = items.map(&:attributes)
     new_items.each_with_index do |item,index|
@@ -62,9 +66,9 @@ class Seller::MarketplaceController < Seller::MainController
   end
 
   def search_brands
-    search = BrandDetail.search do
+    search = BrandDetail.solr_search do
       fulltext params[:term]
     end
-    @brands = search.results
+    @brands = search.result
   end
 end

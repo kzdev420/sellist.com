@@ -1,0 +1,853 @@
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE DATABASE "sellist_dev" ENCODING = 'unicode'[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE DATABASE "sellist_test" ENCODING = 'unicode'[0m
+  [1m[35m (17.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (202.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sellist_dev"[0m
+  [1m[35m (109.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sellist_test"[0m
+  [1m[35m (1266.4ms)[0m  [1m[35mCREATE DATABASE "sellist_dev" ENCODING = 'unicode'[0m
+  [1m[35m (247.6ms)[0m  [1m[35mCREATE DATABASE "sellist_test" ENCODING = 'unicode'[0m
+  [1m[35m (19.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (2.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7856604754602880815)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20171012180748)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "first_name" character varying, "last_name" character varying, "address" character varying, "suit" character varying, "city" character varying, "state" character varying, "postal_code" character varying, "country" character varying, "account_type" character varying, "is_admin" boolean DEFAULT FALSE, "active" boolean DEFAULT FALSE, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" timestamp, "last_sign_in_at" timestamp, "current_sign_in_ip" inet, "last_sign_in_ip" inet, "confirmation_token" character varying, "confirmed_at" timestamp, "confirmation_sent_at" timestamp, "unconfirmed_email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_confirmation_token" ON "users"  ("confirmation_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171012180748"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSellerDetails (20171012181059)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "seller_details" ("id" bigserial primary key, "user_id" bigint, "ssn_no" character varying, "birth_date" date, "store_name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_seller_details_on_user_id" ON "seller_details"  ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171012181059"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateBrandDetails (20171012181105)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE TABLE "brand_details" ("id" bigserial primary key, "user_id" bigint, "company_name" character varying, "ein" character varying, "web_address" character varying, "annual_revenue" float, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_brand_details_on_user_id" ON "brand_details"  ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171012181105"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIsSuperAdminToUser (20171023050159)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.7ms)[0m  [1m[35mALTER TABLE "users" ADD "is_super_admin" boolean DEFAULT FALSE[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171023050159"]]
+  [1m[35m (1.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCategories (20171023174654)
+  [1m[35m (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE TABLE "categories" ("id" bigserial primary key, "name" character varying, "description" text, "parent_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_categories_on_parent_id" ON "categories"  ("parent_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171023174654"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateProductCategories (20171024173233)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE TABLE "product_categories" ("id" bigserial primary key, "name" character varying, "description" text, "category_id" bigint, "sub_category_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_product_categories_on_category_id" ON "product_categories"  ("category_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_product_categories_on_sub_category_id" ON "product_categories"  ("sub_category_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171024173233"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateItems (20171029183134)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "items" ("id" bigserial primary key, "brand_detail_id" bigint, "name" character varying, "title" character varying, "description" text, "price" float, "upc" character varying, "item_number" character varying, "model_number" character varying, "heading_1" text, "heading_2" text, "heading_3" text, "h1_description" text, "h2_description" text, "h3_description" text, "discount_in_percent" float, "discount_in_currency" float, "category_id" bigint, "sub_category_id" bigint, "product_category_id" bigint, "enabled_for_sale" boolean DEFAULT FALSE, "style" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_items_on_brand_detail_id" ON "items"  ("brand_detail_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_items_on_category_id" ON "items"  ("category_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_items_on_sub_category_id" ON "items"  ("sub_category_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_items_on_product_category_id" ON "items"  ("product_category_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171029183134"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateImages (20171029184925)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "images" ("id" bigserial primary key, "parent_id" integer, "parent_type" character varying, "title" character varying, "file" character varying, "size" character varying, "image_type" character varying, "format" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171029184925"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddCommissionColsToItem (20171115193453)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "items" ADD "commission_in_percent" float[0m
+  [1m[35m (3.6ms)[0m  [1m[35mALTER TABLE "items" ADD "commission_in_currency" float[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171115193453"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSellerItems (20171115194648)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "seller_items" ("id" bigserial primary key, "seller_id" bigint, "item_id" bigint, "discontinued" boolean DEFAULT FALSE, "discontinued_reason" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_seller_items_on_seller_id" ON "seller_items"  ("seller_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_seller_items_on_item_id" ON "seller_items"  ("item_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171115194648"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateFriendlyIdSlugs (20171121181813)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "friendly_id_slugs" ("id" bigserial primary key, "slug" character varying NOT NULL, "sluggable_id" integer NOT NULL, "sluggable_type" character varying(50), "scope" character varying, "created_at" timestamp)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_friendly_id_slugs_on_sluggable_id" ON "friendly_id_slugs"  ("sluggable_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_friendly_id_slugs_on_slug_and_sluggable_type" ON "friendly_id_slugs"  ("slug", "sluggable_type")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope" ON "friendly_id_slugs"  ("slug", "sluggable_type", "scope")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_friendly_id_slugs_on_sluggable_type" ON "friendly_id_slugs"  ("sluggable_type")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171121181813"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddSlugsToCategoriesTables (20171121183454)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "categories" ADD "slug" character varying[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "product_categories" ADD "slug" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171121183454"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPhoneToUser (20171207131303)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "phone" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171207131303"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddProfilePicToUser (20171207184835)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "users" ADD "profile_pic" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171207184835"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateShops (20180217082017)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "shops" ("id" bigserial primary key, "shopify_domain" character varying NOT NULL, "shopify_token" character varying NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_shops_on_shopify_domain" ON "shops"  ("shopify_domain")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180217082017"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddSessionsTable (20180222081529)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "sessions" ("id" bigserial primary key, "session_id" character varying NOT NULL, "data" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_sessions_on_session_id" ON "sessions"  ("session_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_sessions_on_updated_at" ON "sessions"  ("updated_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180222081529"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateShopifyShops (20180223203220)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "shopify_shops" ("id" bigserial primary key, "brand_detail_id" bigint, "name" character varying, "url" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_shopify_shops_on_brand_detail_id" ON "shopify_shops"  ("brand_detail_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180223203220"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddShopifyShopToItem (20180223203430)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "items" ADD "shopify_shop_id" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180223203430"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddSkuToItem (20180316131317)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "items" ADD "sku" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180316131317"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateApps (20180324141913)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE TABLE "apps" ("id" bigserial primary key, "name" character varying, "url" character varying, "logo" character varying, "original" boolean DEFAULT TRUE, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180324141913"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateRecommendedApps (20180404173518)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "recommended_apps" ("id" bigserial primary key, "user_id" bigint, "name" character varying, "url" character varying, "integrated" boolean DEFAULT FALSE, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_recommended_apps_on_user_id" ON "recommended_apps"  ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180404173518"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAppInstalledToShopifyShop (20190203184721)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.7ms)[0m  [1m[35mALTER TABLE "shopify_shops" ADD "app_installed" boolean DEFAULT TRUE[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190203184721"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateActiveStorageTables (20190511204227)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "active_storage_blobs" ("id" bigserial primary key, "key" character varying NOT NULL, "filename" character varying NOT NULL, "content_type" character varying, "metadata" text, "byte_size" bigint NOT NULL, "checksum" character varying NOT NULL, "created_at" timestamp NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_active_storage_blobs_on_key" ON "active_storage_blobs"  ("key")[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "active_storage_attachments" ("id" bigserial primary key, "name" character varying NOT NULL, "record_type" character varying NOT NULL, "record_id" bigint NOT NULL, "blob_id" bigint NOT NULL, "created_at" timestamp NOT NULL, CONSTRAINT "fk_rails_c3b3935057"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_active_storage_attachments_on_blob_id" ON "active_storage_attachments"  ("blob_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_active_storage_attachments_uniqueness" ON "active_storage_attachments"  ("record_type", "record_id", "name", "blob_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204227"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to SolidusOneFour (20190511204228)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_users"[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "spree_users" ("id" serial NOT NULL PRIMARY KEY, "crypted_password" character varying(128), "salt" character varying(128), "email" character varying, "remember_token" character varying, "remember_token_expires_at" character varying, "persistence_token" character varying, "single_access_token" character varying, "perishable_token" character varying, "login_count" integer DEFAULT 0 NOT NULL, "failed_login_count" integer DEFAULT 0 NOT NULL, "last_request_at" timestamp, "current_login_at" timestamp, "last_login_at" timestamp, "current_login_ip" character varying, "last_login_ip" character varying, "login" character varying, "ship_address_id" integer, "bill_address_id" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "openid_identifier" character varying)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "friendly_id_slugs" CASCADE[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "friendly_id_slugs" ("id" serial NOT NULL PRIMARY KEY, "slug" character varying NOT NULL, "sluggable_id" integer NOT NULL, "sluggable_type" character varying(50), "scope" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope" ON "friendly_id_slugs"  ("slug", "sluggable_type", "scope")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_friendly_id_slugs_on_slug_and_sluggable_type" ON "friendly_id_slugs"  ("slug", "sluggable_type")[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE  INDEX  "index_friendly_id_slugs_on_sluggable_id" ON "friendly_id_slugs"  ("sluggable_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_friendly_id_slugs_on_sluggable_type" ON "friendly_id_slugs"  ("sluggable_type")[0m
+  [1m[35m (5.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_addresses" CASCADE[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "spree_addresses" ("id" serial NOT NULL PRIMARY KEY, "firstname" character varying, "lastname" character varying, "address1" character varying, "address2" character varying, "city" character varying, "zipcode" character varying, "phone" character varying, "state_name" character varying, "alternative_phone" character varying, "company" character varying, "state_id" integer, "country_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_addresses_on_country_id" ON "spree_addresses"  ("country_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_addresses_on_firstname" ON "spree_addresses"  ("firstname")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_addresses_on_lastname" ON "spree_addresses"  ("lastname")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_addresses_on_state_id" ON "spree_addresses"  ("state_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_adjustment_reasons" CASCADE[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE "spree_adjustment_reasons" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "code" character varying, "active" boolean DEFAULT TRUE, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_adjustment_reasons_on_active" ON "spree_adjustment_reasons"  ("active")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_spree_adjustment_reasons_on_code" ON "spree_adjustment_reasons"  ("code")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_adjustments" CASCADE[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "spree_adjustments" ("id" serial NOT NULL PRIMARY KEY, "source_type" character varying, "source_id" integer, "adjustable_type" character varying, "adjustable_id" integer NOT NULL, "amount" decimal(10,2), "label" character varying, "eligible" boolean DEFAULT TRUE, "created_at" timestamp(6), "updated_at" timestamp(6), "order_id" integer NOT NULL, "included" boolean DEFAULT FALSE, "promotion_code_id" integer, "adjustment_reason_id" integer, "finalized" boolean DEFAULT FALSE NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_adjustments_on_adjustable_id_and_adjustable_type" ON "spree_adjustments"  ("adjustable_id", "adjustable_type")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_adjustments_on_order_id" ON "spree_adjustments"  ("adjustable_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_adjustments_on_eligible" ON "spree_adjustments"  ("eligible")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_adjustments_on_order_id" ON "spree_adjustments"  ("order_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_adjustments_on_promotion_code_id" ON "spree_adjustments"  ("promotion_code_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_adjustments_on_source_id_and_source_type" ON "spree_adjustments"  ("source_id", "source_type")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_assets" CASCADE[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE TABLE "spree_assets" ("id" serial NOT NULL PRIMARY KEY, "viewable_type" character varying, "viewable_id" integer, "attachment_width" integer, "attachment_height" integer, "attachment_file_size" integer, "position" integer, "attachment_content_type" character varying, "attachment_file_name" character varying, "type" character varying(75), "attachment_updated_at" timestamp, "alt" text, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_assets_on_viewable_id" ON "spree_assets"  ("viewable_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_assets_on_viewable_type_and_type" ON "spree_assets"  ("viewable_type", "type")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_calculators" CASCADE[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "spree_calculators" ("id" serial NOT NULL PRIMARY KEY, "type" character varying, "calculable_type" character varying, "calculable_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6), "preferences" text)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_spree_calculators_on_calculable_id_and_calculable_type" ON "spree_calculators"  ("calculable_id", "calculable_type")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_spree_calculators_on_id_and_type" ON "spree_calculators"  ("id", "type")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_cartons" CASCADE[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "spree_cartons" ("id" serial NOT NULL PRIMARY KEY, "number" character varying, "external_number" character varying, "stock_location_id" integer, "address_id" integer, "shipping_method_id" integer, "tracking" character varying, "shipped_at" timestamp, "created_at" timestamp(6), "updated_at" timestamp(6), "imported_from_shipment_id" integer)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_spree_cartons_on_external_number" ON "spree_cartons"  ("external_number")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_cartons_on_imported_from_shipment_id" ON "spree_cartons"  ("imported_from_shipment_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_cartons_on_number" ON "spree_cartons"  ("number")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_cartons_on_stock_location_id" ON "spree_cartons"  ("stock_location_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_countries" CASCADE[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "spree_countries" ("id" serial NOT NULL PRIMARY KEY, "iso_name" character varying, "iso" character varying, "iso3" character varying, "name" character varying, "numcode" integer, "states_required" boolean DEFAULT FALSE, "updated_at" timestamp(6), "created_at" timestamp(6))[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_countries_on_iso" ON "spree_countries"  ("iso")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_credit_cards" CASCADE[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE TABLE "spree_credit_cards" ("id" serial NOT NULL PRIMARY KEY, "month" character varying, "year" character varying, "cc_type" character varying, "last_digits" character varying, "gateway_customer_profile_id" character varying, "gateway_payment_profile_id" character varying, "created_at" timestamp(6), "updated_at" timestamp(6), "name" character varying, "user_id" integer, "payment_method_id" integer, "default" boolean DEFAULT FALSE NOT NULL, "address_id" integer)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_credit_cards_on_payment_method_id" ON "spree_credit_cards"  ("payment_method_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_credit_cards_on_user_id" ON "spree_credit_cards"  ("user_id")[0m
+  [1m[35m (2.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_customer_returns" CASCADE[0m
+  [1m[35m (7.1ms)[0m  [1m[35mCREATE TABLE "spree_customer_returns" ("id" serial NOT NULL PRIMARY KEY, "number" character varying, "stock_location_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_inventory_units" CASCADE[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "spree_inventory_units" ("id" serial NOT NULL PRIMARY KEY, "state" character varying, "variant_id" integer, "order_id" integer, "shipment_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6), "pending" boolean DEFAULT TRUE, "line_item_id" integer, "carton_id" integer)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_inventory_units_on_carton_id" ON "spree_inventory_units"  ("carton_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_inventory_units_on_line_item_id" ON "spree_inventory_units"  ("line_item_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_inventory_units_on_order_id" ON "spree_inventory_units"  ("order_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_inventory_units_on_shipment_id" ON "spree_inventory_units"  ("shipment_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_inventory_units_on_variant_id" ON "spree_inventory_units"  ("variant_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_line_item_actions" CASCADE[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "spree_line_item_actions" ("id" serial NOT NULL PRIMARY KEY, "line_item_id" integer NOT NULL, "action_id" integer NOT NULL, "quantity" integer DEFAULT 0, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_line_item_actions_on_action_id" ON "spree_line_item_actions"  ("action_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_line_item_actions_on_line_item_id" ON "spree_line_item_actions"  ("line_item_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_line_items" CASCADE[0m
+  [1m[35m (8.0ms)[0m  [1m[35mCREATE TABLE "spree_line_items" ("id" serial NOT NULL PRIMARY KEY, "variant_id" integer, "order_id" integer, "quantity" integer NOT NULL, "price" decimal(10,2) NOT NULL, "created_at" timestamp(6), "updated_at" timestamp(6), "currency" character varying, "cost_price" decimal(10,2), "tax_category_id" integer, "adjustment_total" decimal(10,2) DEFAULT '0.0', "additional_tax_total" decimal(10,2) DEFAULT '0.0', "promo_total" decimal(10,2) DEFAULT '0.0', "included_tax_total" decimal(10,2) DEFAULT '0.0' NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_line_items_on_order_id" ON "spree_line_items"  ("order_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_line_items_on_variant_id" ON "spree_line_items"  ("variant_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_log_entries" CASCADE[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "spree_log_entries" ("id" serial NOT NULL PRIMARY KEY, "source_type" character varying, "source_id" integer, "details" text, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_log_entries_on_source_id_and_source_type" ON "spree_log_entries"  ("source_id", "source_type")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_option_type_prototypes" CASCADE[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "spree_option_type_prototypes" ("id" serial NOT NULL PRIMARY KEY, "prototype_id" integer, "option_type_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_option_types" CASCADE[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "spree_option_types" ("id" serial NOT NULL PRIMARY KEY, "name" character varying(100), "presentation" character varying(100), "position" integer DEFAULT 0 NOT NULL, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_option_types_on_position" ON "spree_option_types"  ("position")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_option_values" CASCADE[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "spree_option_values" ("id" serial NOT NULL PRIMARY KEY, "position" integer, "name" character varying, "presentation" character varying, "option_type_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_spree_option_values_on_option_type_id" ON "spree_option_values"  ("option_type_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_spree_option_values_on_position" ON "spree_option_values"  ("position")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_option_values_variants" CASCADE[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "spree_option_values_variants" ("id" serial NOT NULL PRIMARY KEY, "variant_id" integer, "option_value_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_option_values_variants_on_variant_id_and_option_value_id" ON "spree_option_values_variants"  ("variant_id", "option_value_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_option_values_variants_on_variant_id" ON "spree_option_values_variants"  ("variant_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_order_mutexes" CASCADE[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "spree_order_mutexes" ("id" serial NOT NULL PRIMARY KEY, "order_id" integer NOT NULL, "created_at" timestamp(6))[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_order_mutexes_on_order_id" ON "spree_order_mutexes"  ("order_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_orders" CASCADE[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "spree_orders" ("id" serial NOT NULL PRIMARY KEY, "number" character varying(32), "item_total" decimal(10,2) DEFAULT '0.0' NOT NULL, "total" decimal(10,2) DEFAULT '0.0' NOT NULL, "state" character varying, "adjustment_total" decimal(10,2) DEFAULT '0.0' NOT NULL, "user_id" integer, "completed_at" timestamp, "bill_address_id" integer, "ship_address_id" integer, "payment_total" decimal(10,2) DEFAULT '0.0', "shipment_state" character varying, "payment_state" character varying, "email" character varying, "special_instructions" text, "created_at" timestamp(6), "updated_at" timestamp(6), "currency" character varying, "last_ip_address" character varying, "created_by_id" integer, "shipment_total" decimal(10,2) DEFAULT '0.0' NOT NULL, "additional_tax_total" decimal(10,2) DEFAULT '0.0', "promo_total" decimal(10,2) DEFAULT '0.0', "channel" character varying DEFAULT 'spree', "included_tax_total" decimal(10,2) DEFAULT '0.0' NOT NULL, "item_count" integer DEFAULT 0, "approver_id" integer, "approved_at" timestamp, "confirmation_delivered" boolean DEFAULT FALSE, "guest_token" character varying, "canceled_at" timestamp, "canceler_id" integer, "store_id" integer, "approver_name" character varying, "frontend_viewable" boolean DEFAULT TRUE NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_on_approver_id" ON "spree_orders"  ("approver_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_on_bill_address_id" ON "spree_orders"  ("bill_address_id")[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_on_completed_at" ON "spree_orders"  ("completed_at")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_on_created_by_id" ON "spree_orders"  ("created_by_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_on_guest_token" ON "spree_orders"  ("guest_token")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_on_number" ON "spree_orders"  ("number")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_on_ship_address_id" ON "spree_orders"  ("ship_address_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_on_user_id_and_created_by_id" ON "spree_orders"  ("user_id", "created_by_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_on_user_id" ON "spree_orders"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_orders_promotions" CASCADE[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "spree_orders_promotions" ("id" serial NOT NULL PRIMARY KEY, "order_id" integer, "promotion_id" integer, "promotion_code_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_promotions_on_order_id_and_promotion_id" ON "spree_orders_promotions"  ("order_id", "promotion_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_orders_promotions_on_promotion_code_id" ON "spree_orders_promotions"  ("promotion_code_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_payment_capture_events" CASCADE[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "spree_payment_capture_events" ("id" serial NOT NULL PRIMARY KEY, "amount" decimal(10,2) DEFAULT '0.0', "payment_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_payment_capture_events_on_payment_id" ON "spree_payment_capture_events"  ("payment_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_payment_methods" CASCADE[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "spree_payment_methods" ("id" serial NOT NULL PRIMARY KEY, "type" character varying, "name" character varying, "description" text, "active" boolean DEFAULT TRUE, "deleted_at" timestamp, "created_at" timestamp(6), "updated_at" timestamp(6), "display_on" character varying, "auto_capture" boolean, "preferences" text, "preference_source" character varying, "position" integer DEFAULT 0)[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE  INDEX  "index_spree_payment_methods_on_id_and_type" ON "spree_payment_methods"  ("id", "type")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_payments" CASCADE[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "spree_payments" ("id" serial NOT NULL PRIMARY KEY, "amount" decimal(10,2) DEFAULT '0.0' NOT NULL, "order_id" integer, "source_type" character varying, "source_id" integer, "payment_method_id" integer, "state" character varying, "response_code" character varying, "avs_response" character varying, "created_at" timestamp(6), "updated_at" timestamp(6), "number" character varying, "cvv_response_code" character varying, "cvv_response_message" character varying)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE  INDEX  "index_spree_payments_on_order_id" ON "spree_payments"  ("order_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_spree_payments_on_payment_method_id" ON "spree_payments"  ("payment_method_id")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_payments_on_source_id_and_source_type" ON "spree_payments"  ("source_id", "source_type")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_preferences" CASCADE[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "spree_preferences" ("id" serial NOT NULL PRIMARY KEY, "value" text, "key" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_preferences_on_key" ON "spree_preferences"  ("key")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_prices" CASCADE[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "spree_prices" ("id" serial NOT NULL PRIMARY KEY, "variant_id" integer NOT NULL, "amount" decimal(10,2), "currency" character varying, "deleted_at" timestamp, "is_default" boolean DEFAULT TRUE NOT NULL, "created_at" timestamp(6), "updated_at" timestamp(6), "country_iso" character varying(2))[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE  INDEX  "index_spree_prices_on_country_iso" ON "spree_prices"  ("country_iso")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_prices_on_variant_id_and_currency" ON "spree_prices"  ("variant_id", "currency")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_product_option_types" CASCADE[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "spree_product_option_types" ("id" serial NOT NULL PRIMARY KEY, "position" integer, "product_id" integer, "option_type_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_product_option_types_on_option_type_id" ON "spree_product_option_types"  ("option_type_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_spree_product_option_types_on_position" ON "spree_product_option_types"  ("position")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_product_option_types_on_product_id" ON "spree_product_option_types"  ("product_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_product_promotion_rules" CASCADE[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "spree_product_promotion_rules" ("id" serial NOT NULL PRIMARY KEY, "product_id" integer, "promotion_rule_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_products_promotion_rules_on_product_id" ON "spree_product_promotion_rules"  ("product_id")[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_products_promotion_rules_on_promotion_rule_id" ON "spree_product_promotion_rules"  ("promotion_rule_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_product_properties" CASCADE[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "spree_product_properties" ("id" serial NOT NULL PRIMARY KEY, "value" character varying, "product_id" integer, "property_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6), "position" integer DEFAULT 0)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE  INDEX  "index_spree_product_properties_on_position" ON "spree_product_properties"  ("position")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_product_properties_on_product_id" ON "spree_product_properties"  ("product_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_product_properties_on_property_id" ON "spree_product_properties"  ("property_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_products" CASCADE[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "spree_products" ("id" serial NOT NULL PRIMARY KEY, "name" character varying DEFAULT '' NOT NULL, "description" text, "available_on" timestamp, "deleted_at" timestamp, "slug" character varying, "meta_description" text, "meta_keywords" character varying, "tax_category_id" integer, "shipping_category_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6), "promotionable" boolean DEFAULT TRUE, "meta_title" character varying)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_products_on_available_on" ON "spree_products"  ("available_on")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_products_on_deleted_at" ON "spree_products"  ("deleted_at")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_products_on_name" ON "spree_products"  ("name")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_products_on_slug" ON "spree_products"  ("slug")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_products_taxons" CASCADE[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "spree_products_taxons" ("id" serial NOT NULL PRIMARY KEY, "product_id" integer, "taxon_id" integer, "position" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_products_taxons_on_position" ON "spree_products_taxons"  ("position")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_products_taxons_on_product_id" ON "spree_products_taxons"  ("product_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_products_taxons_on_taxon_id" ON "spree_products_taxons"  ("taxon_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_promotion_action_line_items" CASCADE[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "spree_promotion_action_line_items" ("id" serial NOT NULL PRIMARY KEY, "promotion_action_id" integer, "variant_id" integer, "quantity" integer DEFAULT 1, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_action_line_items_on_promotion_action_id" ON "spree_promotion_action_line_items"  ("promotion_action_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_action_line_items_on_variant_id" ON "spree_promotion_action_line_items"  ("variant_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_promotion_actions" CASCADE[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "spree_promotion_actions" ("id" serial NOT NULL PRIMARY KEY, "promotion_id" integer, "position" integer, "type" character varying, "deleted_at" timestamp, "preferences" text, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_actions_on_deleted_at" ON "spree_promotion_actions"  ("deleted_at")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_actions_on_id_and_type" ON "spree_promotion_actions"  ("id", "type")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_actions_on_promotion_id" ON "spree_promotion_actions"  ("promotion_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_promotion_categories" CASCADE[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "spree_promotion_categories" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "created_at" timestamp(6), "updated_at" timestamp(6), "code" character varying)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_promotion_codes" CASCADE[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "spree_promotion_codes" ("id" serial NOT NULL PRIMARY KEY, "promotion_id" integer NOT NULL, "value" character varying NOT NULL, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_codes_on_promotion_id" ON "spree_promotion_codes"  ("promotion_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_promotion_codes_on_value" ON "spree_promotion_codes"  ("value")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_promotion_rule_taxons" CASCADE[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "spree_promotion_rule_taxons" ("id" serial NOT NULL PRIMARY KEY, "taxon_id" integer, "promotion_rule_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_rule_taxons_on_promotion_rule_id" ON "spree_promotion_rule_taxons"  ("promotion_rule_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_rule_taxons_on_taxon_id" ON "spree_promotion_rule_taxons"  ("taxon_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_promotion_rules" CASCADE[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "spree_promotion_rules" ("id" serial NOT NULL PRIMARY KEY, "promotion_id" integer, "product_group_id" integer, "type" character varying, "created_at" timestamp(6), "updated_at" timestamp(6), "code" character varying, "preferences" text)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_promotion_rules_on_product_group_id" ON "spree_promotion_rules"  ("product_group_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_rules_on_promotion_id" ON "spree_promotion_rules"  ("promotion_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_promotion_rules_users" CASCADE[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "spree_promotion_rules_users" ("id" serial NOT NULL PRIMARY KEY, "user_id" integer, "promotion_rule_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_promotion_rules_users_on_promotion_rule_id" ON "spree_promotion_rules_users"  ("promotion_rule_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_promotion_rules_users_on_user_id" ON "spree_promotion_rules_users"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_promotions" CASCADE[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "spree_promotions" ("id" serial NOT NULL PRIMARY KEY, "description" character varying, "expires_at" timestamp, "starts_at" timestamp, "name" character varying, "type" character varying, "usage_limit" integer, "match_policy" character varying DEFAULT 'all', "code" character varying, "advertise" boolean DEFAULT FALSE, "path" character varying, "created_at" timestamp(6), "updated_at" timestamp(6), "promotion_category_id" integer, "per_code_usage_limit" integer, "apply_automatically" boolean DEFAULT FALSE)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotions_on_advertise" ON "spree_promotions"  ("advertise")[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotions_on_apply_automatically" ON "spree_promotions"  ("apply_automatically")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotions_on_code" ON "spree_promotions"  ("code")[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotions_on_expires_at" ON "spree_promotions"  ("expires_at")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotions_on_id_and_type" ON "spree_promotions"  ("id", "type")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotions_on_promotion_category_id" ON "spree_promotions"  ("promotion_category_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotions_on_starts_at" ON "spree_promotions"  ("starts_at")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_properties" CASCADE[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "spree_properties" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "presentation" character varying NOT NULL, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_property_prototypes" CASCADE[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "spree_property_prototypes" ("id" serial NOT NULL PRIMARY KEY, "prototype_id" integer, "property_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_prototype_taxons" CASCADE[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "spree_prototype_taxons" ("id" serial NOT NULL PRIMARY KEY, "taxon_id" integer, "prototype_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_prototype_taxons_on_prototype_id" ON "spree_prototype_taxons"  ("prototype_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_prototype_taxons_on_taxon_id" ON "spree_prototype_taxons"  ("taxon_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_prototypes" CASCADE[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "spree_prototypes" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_refund_reasons" CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "spree_refund_reasons" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "active" boolean DEFAULT TRUE, "mutable" boolean DEFAULT TRUE, "created_at" timestamp(6), "updated_at" timestamp(6), "code" character varying)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_refunds" CASCADE[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "spree_refunds" ("id" serial NOT NULL PRIMARY KEY, "payment_id" integer, "amount" decimal(10,2) DEFAULT '0.0' NOT NULL, "transaction_id" character varying, "created_at" timestamp(6), "updated_at" timestamp(6), "refund_reason_id" integer, "reimbursement_id" integer)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_refunds_on_payment_id" ON "spree_refunds"  ("payment_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_refunds_on_refund_reason_id" ON "spree_refunds"  ("refund_reason_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_refunds_on_reimbursement_id" ON "spree_refunds"  ("reimbursement_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_reimbursement_credits" CASCADE[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "spree_reimbursement_credits" ("id" serial NOT NULL PRIMARY KEY, "amount" decimal(10,2) DEFAULT '0.0' NOT NULL, "reimbursement_id" integer, "creditable_id" integer, "creditable_type" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_reimbursement_types" CASCADE[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "spree_reimbursement_types" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "active" boolean DEFAULT TRUE, "mutable" boolean DEFAULT TRUE, "created_at" timestamp(6), "updated_at" timestamp(6), "type" character varying)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_reimbursement_types_on_type" ON "spree_reimbursement_types"  ("type")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_reimbursements" CASCADE[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "spree_reimbursements" ("id" serial NOT NULL PRIMARY KEY, "number" character varying, "reimbursement_status" character varying, "customer_return_id" integer, "order_id" integer, "total" decimal(10,2), "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_reimbursements_on_customer_return_id" ON "spree_reimbursements"  ("customer_return_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_reimbursements_on_order_id" ON "spree_reimbursements"  ("order_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_return_authorizations" CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "spree_return_authorizations" ("id" serial NOT NULL PRIMARY KEY, "number" character varying, "state" character varying, "order_id" integer, "memo" text, "created_at" timestamp(6), "updated_at" timestamp(6), "stock_location_id" integer, "return_reason_id" integer)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_return_authorizations_on_return_authorization_reason_id" ON "spree_return_authorizations"  ("return_reason_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_return_items" CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "spree_return_items" ("id" serial NOT NULL PRIMARY KEY, "return_authorization_id" integer, "inventory_unit_id" integer, "exchange_variant_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6), "amount" decimal(12,4) DEFAULT '0.0' NOT NULL, "included_tax_total" decimal(12,4) DEFAULT '0.0' NOT NULL, "additional_tax_total" decimal(12,4) DEFAULT '0.0' NOT NULL, "reception_status" character varying, "acceptance_status" character varying, "customer_return_id" integer, "reimbursement_id" integer, "exchange_inventory_unit_id" integer, "acceptance_status_errors" text, "preferred_reimbursement_type_id" integer, "override_reimbursement_type_id" integer, "resellable" boolean DEFAULT TRUE NOT NULL, "return_reason_id" integer)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_return_items_on_customer_return_id" ON "spree_return_items"  ("customer_return_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_return_items_on_exchange_inventory_unit_id" ON "spree_return_items"  ("exchange_inventory_unit_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_return_reasons" CASCADE[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "spree_return_reasons" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "active" boolean DEFAULT TRUE, "mutable" boolean DEFAULT TRUE, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_roles" CASCADE[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "spree_roles" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_roles_users" CASCADE[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "spree_roles_users" ("id" serial NOT NULL PRIMARY KEY, "role_id" integer, "user_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_spree_roles_users_on_role_id" ON "spree_roles_users"  ("role_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_roles_users_on_user_id" ON "spree_roles_users"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_shipments" CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "spree_shipments" ("id" serial NOT NULL PRIMARY KEY, "tracking" character varying, "number" character varying, "cost" decimal(10,2) DEFAULT '0.0', "shipped_at" timestamp, "order_id" integer, "deprecated_address_id" integer, "state" character varying, "created_at" timestamp(6), "updated_at" timestamp(6), "stock_location_id" integer, "adjustment_total" decimal(10,2) DEFAULT '0.0', "additional_tax_total" decimal(10,2) DEFAULT '0.0', "promo_total" decimal(10,2) DEFAULT '0.0', "included_tax_total" decimal(10,2) DEFAULT '0.0' NOT NULL)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_shipments_on_deprecated_address_id" ON "spree_shipments"  ("deprecated_address_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_shipments_on_number" ON "spree_shipments"  ("number")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_shipments_on_order_id" ON "spree_shipments"  ("order_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_shipments_on_stock_location_id" ON "spree_shipments"  ("stock_location_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_shipping_categories" CASCADE[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "spree_shipping_categories" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_shipping_method_categories" CASCADE[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "spree_shipping_method_categories" ("id" serial NOT NULL PRIMARY KEY, "shipping_method_id" integer NOT NULL, "shipping_category_id" integer NOT NULL, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE UNIQUE INDEX  "unique_spree_shipping_method_categories" ON "spree_shipping_method_categories"  ("shipping_category_id", "shipping_method_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_shipping_method_categories_on_shipping_method_id" ON "spree_shipping_method_categories"  ("shipping_method_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_shipping_method_stock_locations" CASCADE[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "spree_shipping_method_stock_locations" ("id" serial NOT NULL PRIMARY KEY, "shipping_method_id" integer, "stock_location_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "shipping_method_id_spree_sm_sl" ON "spree_shipping_method_stock_locations"  ("shipping_method_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "sstock_location_id_spree_sm_sl" ON "spree_shipping_method_stock_locations"  ("stock_location_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_shipping_method_zones" CASCADE[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE TABLE "spree_shipping_method_zones" ("id" serial NOT NULL PRIMARY KEY, "shipping_method_id" integer, "zone_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_shipping_methods" CASCADE[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "spree_shipping_methods" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "display_on" character varying, "deleted_at" timestamp, "created_at" timestamp(6), "updated_at" timestamp(6), "tracking_url" character varying, "admin_name" character varying, "tax_category_id" integer, "code" character varying, "available_to_all" boolean DEFAULT TRUE, "carrier" character varying, "service_level" character varying)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_shipping_methods_on_tax_category_id" ON "spree_shipping_methods"  ("tax_category_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_shipping_rate_taxes" CASCADE[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "spree_shipping_rate_taxes" ("id" serial NOT NULL PRIMARY KEY, "amount" decimal(8,2) DEFAULT '0.0' NOT NULL, "tax_rate_id" integer, "shipping_rate_id" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_shipping_rate_taxes_on_shipping_rate_id" ON "spree_shipping_rate_taxes"  ("shipping_rate_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_shipping_rate_taxes_on_tax_rate_id" ON "spree_shipping_rate_taxes"  ("tax_rate_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_shipping_rates" CASCADE[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "spree_shipping_rates" ("id" serial NOT NULL PRIMARY KEY, "shipment_id" integer, "shipping_method_id" integer, "selected" boolean DEFAULT FALSE, "cost" decimal(8,2) DEFAULT '0.0', "created_at" timestamp(6), "updated_at" timestamp(6), "tax_rate_id" integer)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE UNIQUE INDEX  "spree_shipping_rates_join_index" ON "spree_shipping_rates"  ("shipment_id", "shipping_method_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_state_changes" CASCADE[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "spree_state_changes" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "previous_state" character varying, "stateful_id" integer, "user_id" integer, "stateful_type" character varying, "next_state" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_spree_state_changes_on_stateful_id_and_stateful_type" ON "spree_state_changes"  ("stateful_id", "stateful_type")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_state_changes_on_user_id" ON "spree_state_changes"  ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_states" CASCADE[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "spree_states" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "abbr" character varying, "country_id" integer, "updated_at" timestamp(6), "created_at" timestamp(6))[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_states_on_country_id" ON "spree_states"  ("country_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_stock_items" CASCADE[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "spree_stock_items" ("id" serial NOT NULL PRIMARY KEY, "stock_location_id" integer, "variant_id" integer, "count_on_hand" integer DEFAULT 0 NOT NULL, "created_at" timestamp(6), "updated_at" timestamp(6), "backorderable" boolean DEFAULT FALSE, "deleted_at" timestamp)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_stock_items_on_deleted_at" ON "spree_stock_items"  ("deleted_at")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "stock_item_by_loc_and_var_id" ON "spree_stock_items"  ("stock_location_id", "variant_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_stock_items_on_stock_location_id" ON "spree_stock_items"  ("stock_location_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_stock_items_on_variant_id_and_stock_location_id" ON "spree_stock_items"  ("variant_id", "stock_location_id") WHERE deleted_at is null[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_stock_locations" CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "spree_stock_locations" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "created_at" timestamp(6), "updated_at" timestamp(6), "default" boolean DEFAULT FALSE NOT NULL, "address1" character varying, "address2" character varying, "city" character varying, "state_id" integer, "state_name" character varying, "country_id" integer, "zipcode" character varying, "phone" character varying, "active" boolean DEFAULT TRUE, "backorderable_default" boolean DEFAULT FALSE, "propagate_all_variants" boolean DEFAULT TRUE, "admin_name" character varying, "position" integer DEFAULT 0, "restock_inventory" boolean DEFAULT TRUE NOT NULL, "fulfillable" boolean DEFAULT TRUE NOT NULL, "code" character varying, "check_stock_on_transfer" boolean DEFAULT TRUE)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_stock_locations_on_country_id" ON "spree_stock_locations"  ("country_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_spree_stock_locations_on_state_id" ON "spree_stock_locations"  ("state_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_stock_movements" CASCADE[0m
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE TABLE "spree_stock_movements" ("id" serial NOT NULL PRIMARY KEY, "stock_item_id" integer, "quantity" integer DEFAULT 0, "action" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "originator_type" character varying, "originator_id" integer)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_spree_stock_movements_on_stock_item_id" ON "spree_stock_movements"  ("stock_item_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_store_credit_categories" CASCADE[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "spree_store_credit_categories" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_store_credit_events" CASCADE[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "spree_store_credit_events" ("id" serial NOT NULL PRIMARY KEY, "store_credit_id" integer NOT NULL, "action" character varying NOT NULL, "amount" decimal(8,2), "user_total_amount" decimal(8,2) DEFAULT '0.0' NOT NULL, "authorization_code" character varying NOT NULL, "deleted_at" timestamp, "originator_type" character varying, "originator_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6), "update_reason_id" integer)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_credit_events_on_deleted_at" ON "spree_store_credit_events"  ("deleted_at")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_credit_events_on_store_credit_id" ON "spree_store_credit_events"  ("store_credit_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_store_credit_types" CASCADE[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "spree_store_credit_types" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "priority" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_credit_types_on_priority" ON "spree_store_credit_types"  ("priority")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_store_credit_update_reasons" CASCADE[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "spree_store_credit_update_reasons" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_store_credits" CASCADE[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "spree_store_credits" ("id" serial NOT NULL PRIMARY KEY, "user_id" integer, "category_id" integer, "created_by_id" integer, "amount" decimal(8,2) DEFAULT '0.0' NOT NULL, "amount_used" decimal(8,2) DEFAULT '0.0' NOT NULL, "amount_authorized" decimal(8,2) DEFAULT '0.0' NOT NULL, "currency" character varying, "memo" text, "spree_store_credits" timestamp, "deleted_at" timestamp, "created_at" timestamp(6), "updated_at" timestamp(6), "type_id" integer, "invalidated_at" timestamp)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_credits_on_deleted_at" ON "spree_store_credits"  ("deleted_at")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_credits_on_type_id" ON "spree_store_credits"  ("type_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_credits_on_user_id" ON "spree_store_credits"  ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_store_payment_methods" CASCADE[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "spree_store_payment_methods" ("id" serial NOT NULL PRIMARY KEY, "store_id" integer NOT NULL, "payment_method_id" integer NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_payment_methods_on_payment_method_id" ON "spree_store_payment_methods"  ("payment_method_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_payment_methods_on_store_id" ON "spree_store_payment_methods"  ("store_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_stores" CASCADE[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "spree_stores" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "url" character varying, "meta_description" text, "meta_keywords" text, "seo_title" character varying, "mail_from_address" character varying, "default_currency" character varying, "code" character varying, "default" boolean DEFAULT FALSE NOT NULL, "created_at" timestamp(6), "updated_at" timestamp(6), "cart_tax_country_iso" character varying)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_stores_on_code" ON "spree_stores"  ("code")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_stores_on_default" ON "spree_stores"  ("default")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_tax_categories" CASCADE[0m
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE TABLE "spree_tax_categories" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "description" character varying, "is_default" boolean DEFAULT FALSE, "deleted_at" timestamp, "created_at" timestamp(6), "updated_at" timestamp(6), "tax_code" character varying)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_tax_rates" CASCADE[0m
+  [1m[35m (8.0ms)[0m  [1m[35mCREATE TABLE "spree_tax_rates" ("id" serial NOT NULL PRIMARY KEY, "amount" decimal(8,5), "zone_id" integer, "tax_category_id" integer, "included_in_price" boolean DEFAULT FALSE, "created_at" timestamp(6), "updated_at" timestamp(6), "name" character varying, "show_rate_in_label" boolean DEFAULT TRUE, "deleted_at" timestamp)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_spree_tax_rates_on_deleted_at" ON "spree_tax_rates"  ("deleted_at")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_tax_rates_on_tax_category_id" ON "spree_tax_rates"  ("tax_category_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_tax_rates_on_zone_id" ON "spree_tax_rates"  ("zone_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_taxonomies" CASCADE[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "spree_taxonomies" ("id" serial NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "created_at" timestamp(6), "updated_at" timestamp(6), "position" integer DEFAULT 0)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_taxonomies_on_position" ON "spree_taxonomies"  ("position")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_taxons" CASCADE[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "spree_taxons" ("id" serial NOT NULL PRIMARY KEY, "parent_id" integer, "position" integer DEFAULT 0, "name" character varying NOT NULL, "permalink" character varying, "taxonomy_id" integer, "lft" integer, "rgt" integer, "icon_file_name" character varying, "icon_content_type" character varying, "icon_file_size" integer, "icon_updated_at" timestamp, "description" text, "created_at" timestamp(6), "updated_at" timestamp(6), "meta_title" character varying, "meta_description" character varying, "meta_keywords" character varying, "depth" integer)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_taxons_on_parent_id" ON "spree_taxons"  ("parent_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_taxons_on_permalink" ON "spree_taxons"  ("permalink")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_spree_taxons_on_position" ON "spree_taxons"  ("position")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_taxons_on_taxonomy_id" ON "spree_taxons"  ("taxonomy_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_unit_cancels" CASCADE[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "spree_unit_cancels" ("id" serial NOT NULL PRIMARY KEY, "inventory_unit_id" integer NOT NULL, "reason" character varying, "created_by" character varying, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_unit_cancels_on_inventory_unit_id" ON "spree_unit_cancels"  ("inventory_unit_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_user_addresses" CASCADE[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "spree_user_addresses" ("id" serial NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "address_id" integer NOT NULL, "default" boolean DEFAULT FALSE, "archived" boolean DEFAULT FALSE, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_user_addresses_on_address_id" ON "spree_user_addresses"  ("address_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_user_addresses_on_user_id_and_address_id" ON "spree_user_addresses"  ("user_id", "address_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_user_addresses_on_user_id" ON "spree_user_addresses"  ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_user_stock_locations" CASCADE[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "spree_user_stock_locations" ("id" serial NOT NULL PRIMARY KEY, "user_id" integer, "stock_location_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_user_stock_locations_on_user_id" ON "spree_user_stock_locations"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_variant_property_rule_conditions" CASCADE[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "spree_variant_property_rule_conditions" ("id" serial NOT NULL PRIMARY KEY, "option_value_id" integer, "variant_property_rule_id" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_variant_prop_rule_conditions_on_rule_and_optval" ON "spree_variant_property_rule_conditions"  ("variant_property_rule_id", "option_value_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_variant_property_rule_values" CASCADE[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "spree_variant_property_rule_values" ("id" serial NOT NULL PRIMARY KEY, "value" text, "position" integer DEFAULT 0, "property_id" integer, "variant_property_rule_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_spree_variant_property_rule_values_on_property_id" ON "spree_variant_property_rule_values"  ("property_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_variant_property_rule_values_on_rule" ON "spree_variant_property_rule_values"  ("variant_property_rule_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_variant_property_rules" CASCADE[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "spree_variant_property_rules" ("id" serial NOT NULL PRIMARY KEY, "product_id" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_variant_property_rules_on_product_id" ON "spree_variant_property_rules"  ("product_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_variants" CASCADE[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "spree_variants" ("id" serial NOT NULL PRIMARY KEY, "sku" character varying DEFAULT '' NOT NULL, "weight" decimal(8,2) DEFAULT '0.0', "height" decimal(8,2), "width" decimal(8,2), "depth" decimal(8,2), "deleted_at" timestamp, "is_master" boolean DEFAULT FALSE, "product_id" integer, "cost_price" decimal(10,2), "position" integer, "cost_currency" character varying, "track_inventory" boolean DEFAULT TRUE, "tax_category_id" integer, "updated_at" timestamp(6), "created_at" timestamp(6))[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_variants_on_position" ON "spree_variants"  ("position")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_variants_on_product_id" ON "spree_variants"  ("product_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_variants_on_sku" ON "spree_variants"  ("sku")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_variants_on_tax_category_id" ON "spree_variants"  ("tax_category_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_variants_on_track_inventory" ON "spree_variants"  ("track_inventory")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_zone_members" CASCADE[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "spree_zone_members" ("id" serial NOT NULL PRIMARY KEY, "zoneable_type" character varying, "zoneable_id" integer, "zone_id" integer, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_spree_zone_members_on_zone_id" ON "spree_zone_members"  ("zone_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_spree_zone_members_on_zoneable_id_and_zoneable_type" ON "spree_zone_members"  ("zoneable_id", "zoneable_type")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spree_zones" CASCADE[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "spree_zones" ("id" serial NOT NULL PRIMARY KEY, "name" character varying, "description" character varying, "default_tax" boolean DEFAULT FALSE, "zone_members_count" integer DEFAULT 0, "created_at" timestamp(6), "updated_at" timestamp(6))[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204228"]]
+  [1m[35m (11.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSpreeWalletPaymentSources (20190511204229)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "spree_wallet_payment_sources" ("id" serial NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "payment_source_type" character varying NOT NULL, "payment_source_id" integer NOT NULL, "default" boolean DEFAULT FALSE NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_5dd6e027c5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_spree_wallet_payment_sources_on_user_id" ON "spree_wallet_payment_sources"  ("user_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_wallet_payment_sources_on_source_and_user" ON "spree_wallet_payment_sources"  ("user_id", "payment_source_id", "payment_source_type")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204229"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to MigrateCreditCardsToWalletPaymentSources (20190511204230)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMigrateCreditCardsToWalletPaymentSources::CreditCard Load (0.4ms)[0m  [1m[34mSELECT  "spree_credit_cards".* FROM "spree_credit_cards" WHERE "spree_credit_cards"."gateway_customer_profile_id" IS NOT NULL AND "spree_credit_cards"."user_id" IS NOT NULL ORDER BY "spree_credit_cards"."id" ASC LIMIT $1[0m  [["LIMIT", 1000]]
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204230"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveIsDefaultFromPrices (20190511204231)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "spree_prices" DROP COLUMN "is_default"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204231"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveCurrencyFromLineItems (20190511204232)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spree_line_items" DROP COLUMN "currency"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204232"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAvailableToColumnsAndRemoveDisplayOnFromPaymentMethods (20190511204233)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.2ms)[0m  [1m[35mALTER TABLE "spree_payment_methods" ADD "available_to_users" boolean DEFAULT TRUE[0m
+  [1m[35m (3.6ms)[0m  [1m[35mALTER TABLE "spree_payment_methods" ADD "available_to_admin" boolean DEFAULT TRUE[0m
+  [1m[35m (0.7ms)[0m  [1m[33mUPDATE spree_payment_methods SET available_to_users=FALSE WHERE NOT (display_on='front_end' OR display_on='' OR display_on IS NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[33mUPDATE spree_payment_methods SET available_to_admin=FALSE WHERE NOT (display_on='back_end' OR display_on='' OR display_on IS NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spree_payment_methods" DROP COLUMN "display_on"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204233"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSpreePromotionCodeBatch (20190511204234)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "spree_promotion_code_batches" ("id" serial NOT NULL PRIMARY KEY, "promotion_id" integer NOT NULL, "base_code" character varying NOT NULL, "number_of_codes" integer NOT NULL, "email" character varying, "error" character varying, "state" character varying DEFAULT 'pending', "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_code_batches_on_promotion_id" ON "spree_promotion_code_batches"  ("promotion_id")[0m
+  [1m[35m (1.4ms)[0m  [1m[35mALTER TABLE "spree_promotion_code_batches" ADD CONSTRAINT "fk_rails_c217102f50"
+FOREIGN KEY ("promotion_id")
+  REFERENCES "spree_promotions" ("id")
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "spree_promotion_codes" ADD "promotion_code_batch_id" integer[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "spree_promotion_codes" ADD CONSTRAINT "fk_rails_e306e312d9"
+FOREIGN KEY ("promotion_code_batch_id")
+  REFERENCES "spree_promotion_code_batches" ("id")
+[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_codes_on_promotion_code_batch_id" ON "spree_promotion_codes"  ("promotion_code_batch_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204234"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAvailableToUsersAndRemoveDisplayOnFromShippingMethods (20190511204235)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.5ms)[0m  [1m[35mALTER TABLE "spree_shipping_methods" ADD "available_to_users" boolean DEFAULT TRUE[0m
+  [1m[35m (0.4ms)[0m  [1m[33mUPDATE spree_shipping_methods SET available_to_users=FALSE WHERE display_on='back_end'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spree_shipping_methods" DROP COLUMN "display_on"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204235"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIndexToSpreePaymentsNumber (20190511204236)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_payments_on_number" ON "spree_payments"  ("number")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204236"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveSpreeStoreCreditsColumn (20190511204237)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "spree_store_credits" DROP COLUMN "spree_store_credits"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204237"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddLftAndRgtIndexesToTaxons (20190511204238)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_spree_taxons_on_lft" ON "spree_taxons"  ("lft")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_taxons_on_rgt" ON "spree_taxons"  ("rgt")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204238"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveOrderIdFromInventoryUnits (20190511204239)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mRemoveOrderIdFromInventoryUnits::InventoryUnit Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_inventory_units" INNER JOIN "spree_shipments" ON "spree_shipments"."id" = "spree_inventory_units"."shipment_id" WHERE NOT (spree_inventory_units.order_id = spree_shipments.order_id) LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "spree_inventory_units" DROP COLUMN "order_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204239"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to TransformTaxRateCategoryRelation (20190511204240)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "spree_tax_rate_tax_categories" ("id" serial NOT NULL PRIMARY KEY, "tax_category_id" integer NOT NULL, "tax_rate_id" integer NOT NULL)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_spree_tax_rate_tax_categories_on_tax_category_id" ON "spree_tax_rate_tax_categories"  ("tax_category_id")[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_spree_tax_rate_tax_categories_on_tax_rate_id" ON "spree_tax_rate_tax_categories"  ("tax_rate_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "spree_tax_rate_tax_categories" ADD CONSTRAINT "fk_rails_499313ce8e"
+FOREIGN KEY ("tax_category_id")
+  REFERENCES "spree_tax_categories" ("id")
+[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "spree_tax_rate_tax_categories" ADD CONSTRAINT "fk_rails_3e6fe87e12"
+FOREIGN KEY ("tax_rate_id")
+  REFERENCES "spree_tax_rates" ("id")
+[0m
+  [1m[36mTransformTaxRateCategoryRelation::TaxRate Load (0.3ms)[0m  [1m[34mSELECT  "spree_tax_rates".* FROM "spree_tax_rates" WHERE "spree_tax_rates"."tax_category_id" IS NOT NULL ORDER BY "spree_tax_rates"."id" ASC LIMIT $1[0m  [["LIMIT", 1000]]
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "spree_tax_rates" DROP COLUMN "tax_category_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204240"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddRolesUniqueConstraints (20190511204241)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_roles_on_name" ON "spree_roles"  ("name")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_spree_roles_users_on_user_id_and_role_id" ON "spree_roles_users"  ("user_id", "role_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204241"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTimeRangeToTaxRate (20190511204242)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spree_tax_rates" ADD "starts_at" timestamp[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spree_tax_rates" ADD "expires_at" timestamp[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204242"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RenameBogusGateways (20190511204243)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204243"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveDefaultTaxFromSpreeZones (20190511204244)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "spree_zones" DROP COLUMN "default_tax"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204244"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePromotionRuleStores (20190511204245)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "spree_promotion_rules_stores" ("id" bigserial primary key, "store_id" bigint NOT NULL, "promotion_rule_id" bigint NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_rules_stores_on_store_id" ON "spree_promotion_rules_stores"  ("store_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_spree_promotion_rules_stores_on_promotion_rule_id" ON "spree_promotion_rules_stores"  ("promotion_rule_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204245"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateStoreShippingMethods (20190511204246)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "spree_store_shipping_methods" ("id" bigserial primary key, "store_id" bigint NOT NULL, "shipping_method_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_shipping_methods_on_store_id" ON "spree_store_shipping_methods"  ("store_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_spree_store_shipping_methods_on_shipping_method_id" ON "spree_store_shipping_methods"  ("shipping_method_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204246"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAvailableLocalesToStores (20190511204247)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "spree_stores" ADD "available_locales" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204247"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAmountRemainingToStoreCreditEvents (20190511204248)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.9ms)[0m  [1m[35mALTER TABLE "spree_store_credit_events" ADD "amount_remaining" decimal(8,2) DEFAULT NULL[0m
+  [1m[36mAddAmountRemainingToStoreCreditEvents::StoreCredit Load (0.5ms)[0m  [1m[34mSELECT  "spree_store_credits".* FROM "spree_store_credits" ORDER BY "spree_store_credits"."id" ASC LIMIT $1[0m  [["LIMIT", 1000]]
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204248"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddJoinCharactersToPromotionCodeBatch (20190511204249)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.4ms)[0m  [1m[35mALTER TABLE "spree_promotion_code_batches" ADD "join_characters" character varying DEFAULT '_' NOT NULL[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204249"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSpreeStoreCreditReasonsTable (20190511204250)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "spree_store_credit_reasons" ("id" bigserial primary key, "name" character varying, "active" boolean DEFAULT TRUE, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mCreateSpreeStoreCreditReasonsTable::StoreCreditUpdateReason Load (0.4ms)[0m  [1m[34mSELECT "spree_store_credit_update_reasons".* FROM "spree_store_credit_update_reasons"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "spree_store_credit_events" ADD "store_credit_reason_id" integer[0m
+  [1m[35m (0.6ms)[0m  [1m[33mupdate spree_store_credit_events set store_credit_reason_id = update_reason_id[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204250"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveCodeFromSpreePromotions (20190511204251)
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mRemoveCodeFromSpreePromotions::Promotion Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_promotions" WHERE NOT (("spree_promotions"."code" = $1 OR "spree_promotions"."code" IS NULL)) LIMIT $2[0m  [["code", ""], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mDROP INDEX  "index_spree_promotions_on_code"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spree_promotions" DROP COLUMN "code"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204251"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DropSpreeStoreCreditUpdateReasons (20190511204252)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.6ms)[0m  [1m[35mDROP TABLE "spree_store_credit_update_reasons"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "spree_store_credit_events" DROP COLUMN "update_reason_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204252"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddApiKeyToSpreeUsers (20190511204253)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204253"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ResizeApiKeyField (20190511204254)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204254"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RenameApiKeyToSpreeApiKey (20190511204255)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204255"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIndexToUserSpreeApiKey (20190511204256)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204256"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddOrderStore (20190511204257)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204257"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateProductsStores (20190511204258)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "products_stores" ("product_id" integer, "store_id" integer, "created_at" timestamp, "updated_at" timestamp)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204258"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to StoreIdForTaxonomies (20190511204259)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "spree_taxonomies" ADD "store_id" integer[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_spree_taxonomies_on_store_id" ON "spree_taxonomies"  ("store_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204259"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveDatetimeColumnsFromProductsStores (20190511204260)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "products_stores" DROP COLUMN "created_at"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "products_stores" DROP COLUMN "updated_at"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204260"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIndexesToProductsStores (20190511204261)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_products_stores_on_product_id" ON "products_stores"  ("product_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_products_stores_on_store_id" ON "products_stores"  ("store_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204261"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to Namespace (20190511204262)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "products_stores" RENAME TO "spree_products_stores"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER INDEX "index_products_stores_on_product_id" RENAME TO "index_spree_products_stores_on_product_id"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER INDEX "index_products_stores_on_store_id" RENAME TO "index_spree_products_stores_on_store_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204262"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddLogoToStores (20190511204263)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "spree_stores" ADD "logo_file_name" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204263"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddStoreShippingMethods (20190511204264)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204264"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddSpreePromotionRulesStores (20190511204265)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204265"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIndexes (20190511204266)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511204266"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddSpreeFieldsToCustomUserTable (20190511205643)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "spree_api_key" character varying(48)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "users" ADD "ship_address_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "users" ADD "bill_address_id" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190511205643"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddSpreeColsToCategoriesNItems (20190517230339)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "categories" ADD "spree_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "product_categories" ADD "spree_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "items" ADD "spree_id" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190517230339"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddSpreeColsToUserDetails (20190518001217)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "brand_details" ADD "spree_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "seller_details" ADD "spree_id" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190518001217"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveSpreeExtraCols (20190519180357)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "categories" DROP COLUMN "spree_id"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "product_categories" DROP COLUMN "spree_id"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "brand_details" DROP COLUMN "spree_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190519180357"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-02-26 05:33:00.284253"], ["updated_at", "2020-02-26 05:33:00.284253"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(7856604754602880815)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "admin@sellist.io"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpree::Country Load (0.3ms)[0m  [1m[34mSELECT  "spree_countries".* FROM "spree_countries" WHERE "spree_countries"."id" = $1 LIMIT $2[0m  [["id", 105], ["LIMIT", 1]]
+  [1m[36mSpree::State Load (0.3ms)[0m  [1m[34mSELECT  "spree_states".* FROM "spree_states" WHERE "spree_states"."id" = $1 LIMIT $2[0m  [["id", 1174], ["LIMIT", 1]]
+  [1m[36mSpree::Address Create (0.7ms)[0m  [1m[32mINSERT INTO "spree_addresses" ("firstname", "lastname", "address1", "city", "zipcode", "phone", "state_id", "country_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"[0m  [["firstname", "Admin"], ["lastname", "Address"], ["address1", "sec. 11D"], ["city", "Faridabad"], ["zipcode", "121007"], ["phone", "23244457586"], ["state_id", 1174], ["country_id", 105], ["created_at", "2020-02-26 05:33:20.237228"], ["updated_at", "2020-02-26 05:33:20.237228"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpree::Address Load (0.4ms)[0m  [1m[34mSELECT  "spree_addresses".* FROM "spree_addresses" WHERE "spree_addresses"."firstname" = $1 AND "spree_addresses"."lastname" = $2 AND "spree_addresses"."address1" = $3 AND "spree_addresses"."address2" IS NULL AND "spree_addresses"."city" = $4 AND "spree_addresses"."zipcode" = $5 AND "spree_addresses"."phone" = $6 AND "spree_addresses"."state_name" IS NULL AND "spree_addresses"."alternative_phone" IS NULL AND "spree_addresses"."company" IS NULL AND "spree_addresses"."state_id" = $7 AND "spree_addresses"."country_id" = $8 LIMIT $9[0m  [["firstname", "Admin"], ["lastname", "Address"], ["address1", "sec. 11D"], ["city", "Faridabad"], ["zipcode", "121007"], ["phone", "23244457586"], ["state_id", 1174], ["country_id", 105], ["LIMIT", 1]]
+  [1m[36mSpree::Country Load (0.3ms)[0m  [1m[34mSELECT  "spree_countries".* FROM "spree_countries" WHERE "spree_countries"."id" = $1 LIMIT $2[0m  [["id", 105], ["LIMIT", 1]]
+  [1m[36mSpree::State Load (0.2ms)[0m  [1m[34mSELECT  "spree_states".* FROM "spree_states" WHERE "spree_states"."id" = $1 LIMIT $2[0m  [["id", 1174], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpree::UserAddress Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_user_addresses" WHERE "spree_user_addresses"."address_id" = $1 AND "spree_user_addresses"."user_id" IS NULL LIMIT $2[0m  [["address_id", 1], ["LIMIT", 1]]
+  [1m[36mSpree::UserAddress Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_user_addresses" WHERE "spree_user_addresses"."user_id" IS NULL AND "spree_user_addresses"."archived" = $1 AND "spree_user_addresses"."default" = $2 LIMIT $3[0m  [["archived", false], ["default", true], ["LIMIT", 1]]
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "spree_admin@sellist.io"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "first_name", "last_name", "active", "confirmed_at", "created_at", "updated_at", "bill_address_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["email", "spree_admin@sellist.io"], ["encrypted_password", "$2a$11$JpeachhmNqZvJEUvD/gyx.y2wBGb310Ua8V6zP574Ww0LADoiIyui"], ["first_name", "Admin"], ["last_name", "Spree"], ["active", true], ["confirmed_at", "2020-02-26 05:33:20.239665"], ["created_at", "2020-02-26 05:33:20.381069"], ["updated_at", "2020-02-26 05:33:20.381069"], ["bill_address_id", 1]]
+  [1m[36mSpree::UserAddress Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_user_addresses" WHERE "spree_user_addresses"."address_id" = $1 AND "spree_user_addresses"."user_id" = $2 LIMIT $3[0m  [["address_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mSpree::UserAddress Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_user_addresses" WHERE "spree_user_addresses"."user_id" = $1 AND "spree_user_addresses"."archived" = $2 AND "spree_user_addresses"."default" = $3 LIMIT $4[0m  [["user_id", 1], ["archived", false], ["default", true], ["LIMIT", 1]]
+  [1m[36mSpree::UserAddress Create (0.4ms)[0m  [1m[32mINSERT INTO "spree_user_addresses" ("user_id", "address_id", "default", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["address_id", 1], ["default", true], ["created_at", "2020-02-26 05:33:20.384508"], ["updated_at", "2020-02-26 05:33:20.384508"]]
+  [1m[36mSpree::Role Load (0.5ms)[0m  [1m[34mSELECT "spree_roles".* FROM "spree_roles" INNER JOIN "spree_roles_users" ON "spree_roles"."id" = "spree_roles_users"."role_id" WHERE "spree_roles_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "spree_admin@sellist.io"], ["LIMIT", 1]]
+  [1m[36mSpree::Role Load (0.2ms)[0m  [1m[34mSELECT  "spree_roles".* FROM "spree_roles" WHERE "spree_roles"."name" = $1 ORDER BY "spree_roles"."id" ASC LIMIT $2[0m  [["name", "admin"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpree::Role Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_roles" WHERE "spree_roles"."name" = $1 LIMIT $2[0m  [["name", "admin"], ["LIMIT", 1]]
+  [1m[36mSpree::Role Create (0.4ms)[0m  [1m[32mINSERT INTO "spree_roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "admin"], ["created_at", "2020-02-26 05:33:20.409705"], ["updated_at", "2020-02-26 05:33:20.409705"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpree::RoleUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_roles_users" WHERE "spree_roles_users"."role_id" = $1 AND "spree_roles_users"."user_id" = $2 LIMIT $3[0m  [["role_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mSpree::RoleUser Create (0.4ms)[0m  [1m[32mINSERT INTO "spree_roles_users" ("role_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["role_id", 1], ["user_id", 1], ["created_at", "2020-02-26 05:33:20.420699"], ["updated_at", "2020-02-26 05:33:20.420699"]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSpree::Role Load (0.3ms)[0m  [1m[34mSELECT "spree_roles".* FROM "spree_roles" INNER JOIN "spree_roles_users" ON "spree_roles"."id" = "spree_roles_users"."role_id" WHERE "spree_roles_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mSpree::Address Load (0.2ms)[0m  [1m[34mSELECT  "spree_addresses".* FROM "spree_addresses" WHERE "spree_addresses"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Update (0.4ms)[0m  [1m[33mUPDATE "users" SET "spree_api_key" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["spree_api_key", "4de8d5faf0aa05f8bbe8f5597ec39695f3fa9c2703591535"], ["updated_at", "2020-02-26 05:33:20.426643"], ["id", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpree::Role Load (0.2ms)[0m  [1m[34mSELECT  "spree_roles".* FROM "spree_roles" WHERE "spree_roles"."name" = $1 ORDER BY "spree_roles"."id" ASC LIMIT $2[0m  [["name", "manufacturer"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpree::Role Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_roles" WHERE "spree_roles"."name" = $1 LIMIT $2[0m  [["name", "manufacturer"], ["LIMIT", 1]]
+  [1m[36mSpree::Role Create (0.3ms)[0m  [1m[32mINSERT INTO "spree_roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "manufacturer"], ["created_at", "2020-02-26 05:33:20.430945"], ["updated_at", "2020-02-26 05:33:20.430945"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpree::Role Load (0.2ms)[0m  [1m[34mSELECT  "spree_roles".* FROM "spree_roles" WHERE "spree_roles"."name" = $1 ORDER BY "spree_roles"."id" ASC LIMIT $2[0m  [["name", "seller"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpree::Role Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_roles" WHERE "spree_roles"."name" = $1 LIMIT $2[0m  [["name", "seller"], ["LIMIT", 1]]
+  [1m[36mSpree::Role Create (0.2ms)[0m  [1m[32mINSERT INTO "spree_roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "seller"], ["created_at", "2020-02-26 05:33:20.434499"], ["updated_at", "2020-02-26 05:33:20.434499"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpree::Role Load (0.2ms)[0m  [1m[34mSELECT  "spree_roles".* FROM "spree_roles" WHERE "spree_roles"."name" = $1 ORDER BY "spree_roles"."id" ASC LIMIT $2[0m  [["name", "store"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpree::Role Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_roles" WHERE "spree_roles"."name" = $1 LIMIT $2[0m  [["name", "store"], ["LIMIT", 1]]
+  [1m[36mSpree::Role Create (0.2ms)[0m  [1m[32mINSERT INTO "spree_roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "store"], ["created_at", "2020-02-26 05:33:20.437428"], ["updated_at", "2020-02-26 05:33:20.437428"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpree::Role Load (0.2ms)[0m  [1m[34mSELECT  "spree_roles".* FROM "spree_roles" WHERE "spree_roles"."name" = $1 ORDER BY "spree_roles"."id" ASC LIMIT $2[0m  [["name", "customer"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpree::Role Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_roles" WHERE "spree_roles"."name" = $1 LIMIT $2[0m  [["name", "customer"], ["LIMIT", 1]]
+  [1m[36mSpree::Role Create (0.2ms)[0m  [1m[32mINSERT INTO "spree_roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "customer"], ["created_at", "2020-02-26 05:33:20.440107"], ["updated_at", "2020-02-26 05:33:20.440107"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpree::Role Load (0.2ms)[0m  [1m[34mSELECT  "spree_roles".* FROM "spree_roles" WHERE "spree_roles"."name" = $1 ORDER BY "spree_roles"."id" ASC LIMIT $2[0m  [["name", "user"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpree::Role Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "spree_roles" WHERE "spree_roles"."name" = $1 LIMIT $2[0m  [["name", "user"], ["LIMIT", 1]]
+  [1m[36mSpree::Role Create (0.2ms)[0m  [1m[32mINSERT INTO "spree_roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "user"], ["created_at", "2020-02-26 05:33:20.442932"], ["updated_at", "2020-02-26 05:33:20.442932"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/" for ::1 at 2020-02-26 00:33:41 -0500
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mSpree::Store Load (1.0ms)[0m  [1m[34mSELECT  "spree_stores".* FROM "spree_stores" WHERE "spree_stores"."url" = $1 LIMIT $2[0m  [["url", "localhost:3000"], ["LIMIT", 1]]
+  [1m[36mCACHE Spree::Store Load (0.0ms)[0m  [1m[34mSELECT  "spree_stores".* FROM "spree_stores" WHERE "spree_stores"."url" = $1 LIMIT $2[0m  [["url", "localhost:3000"], ["LIMIT", 1]]
+  Rendering devise/sessions/new.html.erb within spree/layouts/spree_application
+  Rendered shared/_header.html.erb (7445.0ms)
+  Rendered devise/sessions/new.html.erb within spree/layouts/spree_application (7494.5ms)
+  Rendered custom/_login.html.erb (625.9ms)
+Completed 200 OK in 8224ms (Views: 8125.4ms | ActiveRecord: 13.7ms | Solr: 0.0ms)
+
+
+  [1m[35m (13.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SessionStore::Session Update (14.1ms)[0m  [1m[33mUPDATE "sessions" SET "data" = $1, "updated_at" = $2 WHERE "sessions"."id" = $3[0m  [["data", "BAh7B0kiC2xvY2FsZQY6BkVGOgdlbkkiEF9jc3JmX3Rva2VuBjsARkkiMVhx\najMzM2RYQjJwcUJ3VENHSVhQaEo0TXJpVE5hMEZZOFdGaU5FV0hHYk09BjsA\nRg==\n"], ["updated_at", "2020-02-26 05:33:50.294501"], ["id", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m

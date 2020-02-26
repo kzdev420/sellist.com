@@ -1,0 +1,50 @@
+<header id="header" class="row" data-hook>
+  <figure id="logo" class="col-2" data-hook><%= link_to image_tag('logo.svg', class: "img-responsive"), root_path %></figure>
+  <%= render partial: 'spree/shared/nav_bar' %>
+  <%#= render partial: 'spree/shared/main_nav_bar' if store_menu? %>
+  <ul class="col-2">
+    <li id="link-to-cart" data-hook>
+      <noscript>
+        <%= link_to t('spree.cart'), spree.cart_path %>
+      </noscript>
+    </li>
+  </ul>
+  <div id="wrap-profle" class="col-3">
+    <% if spree_current_user %>
+      <div id="dropdown" class="ddmenu">
+        <a href="#" class="dropdown-toggle">
+        	<span class="account-user-avatar"><img src="/assets/profile-pic.jpg"></span>
+        	<span>
+        		<span class="account-user-name">Dominic Keller</span>
+        		<span class="account-position">Founder</span>
+        	</span>
+        </a>
+        <ul>
+          <li><a href="#">My Profile</a></li>
+          <li><a href="#">Friend Requests</a></li>
+          <li><a href="#">Account Settings</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Log Out</a></li>
+        </ul>
+      </div>
+    <% else %>
+      <%= render 'spree/shared/login_bar_items' %>
+    <% end %>
+  </div>
+</header>
+
+<script>Spree.fetch_cart('<%= j spree.cart_link_path %>')</script>
+
+<script type="text/javascript">
+$("#dropdown").on("click", function(e){
+  e.preventDefault();
+
+  if($(this).hasClass("open")) {
+    $(this).removeClass("open");
+    $(this).children("ul").slideUp("fast");
+  } else {
+    $(this).addClass("open");
+    $(this).children("ul").slideDown("fast");
+  }
+});
+</script>

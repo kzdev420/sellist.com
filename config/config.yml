@@ -4,14 +4,16 @@ default: &default
   shopify_app_secret: d07b2fbf7df3994cebcb6af532dc16d7
   SIDEKIQ_USERNAME: sellist
   SIDEKIQ_PASSWORD: "12345678"
+  site_domain: "sellist.io"
 
 development:
   <<: *default
   site_url: "https://c04b17dc.ngrok.io"
+  site_domain: "lvh.me:3011"
 
 production: &production
   <<: *default
-  site_url: "https://sellist.io"
+  site_url: "http://sellist.io"
   shopify_app_name: "sellist shopify app"
   shopify_app_key: 14c825c14c5fee1a66dc49ebece0a1e9
   shopify_app_secret: 3fe541cb9c14d5fbda34bd73f8fc6dfe

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sellist</title>
+    <%= csrf_meta_tags %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <%= javascript_include_tag 'toastr_file', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'bootstrap', 'style', media: 'all', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <!-- count particles -->
+    <div class="count-particles">
+      <span class="js-count-particles">--</span> particles
+    </div>
+
+    <!-- particles.js container -->
+    <div id="particles-js"></div>
+    <div class="login-page-wrapper">
+      <%= yield %>
+    </div>
+
+    <%= javascript_include_tag 'login', 'data-turbolinks-track': 'reload' %>
+    <script>
+      var count_particles, stats, update;
+      stats = new Stats;
+      stats.setMode(0);
+      stats.domElement.style.position = 'absolute';
+      stats.domElement.style.left = '0px';
+      stats.domElement.style.top = '0px';
+      document.body.appendChild(stats.domElement);
+      count_particles = document.querySelector('.js-count-particles');
+      update = function() {
+        stats.begin();
+        stats.end();
+        if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+          count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+        }
+        requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    </script>
+  </body>
+</html>

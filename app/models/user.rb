@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+
+  include Spree::UserMethods
+  # include Spree::UserAddress
+  # include Spree::UserPaymentSource
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,

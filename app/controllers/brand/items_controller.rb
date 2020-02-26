@@ -46,11 +46,14 @@ class Brand::ItemsController < Brand::MainController
   end
 
   def index
-    search = Item.search do
+    params[:page] ||=1
+    search = Item.solr_search do
       with(:brand_detail_id, current_user.brand_detail.id)
-      paginate page: params[:page], per_page: 10
+      paginate :page => params[:page], :per_page => 10
+      # paginate page: params[:page], per_page: 10
     end
     @items = search.results
+    # @items = search.result.page(params[:page]).per(10)
     #@items = current_user.brand_detail.items.paginate(page: params[:page], per_page: 10)
   end
 
@@ -158,22 +161,26 @@ class Brand::ItemsController < Brand::MainController
   end
 
   def selling
-    search = Item.search do
+    params[:page] ||= 1
+    search = Item.solr_search do
       with(:brand_detail_id, current_user.brand_detail.id)
       with(:enabled_for_sale, true)
       paginate page: params[:page], per_page: 10
     end
     params[:enabled_for_sale] = "true"
+    # @items = search.result.page(params[:page]).per(10)
     @items = search.results
   end
 
   def update_list
-    search = Item.search do
+    params[:page] ||= 1
+    search = Item.solr_search do
       with(:brand_detail_id, current_user.brand_detail.id)
       with(:enabled_for_sale, eval(params[:enabled_for_sale]))
       paginate page: params[:page], per_page: 10
     end
     @items = search.results
+    # @items = search.result.page(params[:page]).per(10)
   end
 
   def edit
@@ -233,12 +240,13 @@ class Brand::ItemsController < Brand::MainController
     end
     # items.update_all(items_params)
     Sunspot.index! items
-    search = Item.search do
+    search = Item.solr_search do
       with(:brand_detail_id, current_user.brand_detail.id)
       with(:enabled_for_sale, eval(params[:old_enabled_for_sale]))
       paginate page: params[:page], per_page: 10
     end
     params[:enabled_for_sale] = params[:old_enabled_for_sale]
+    # @items = search.result.page(params[:page]).per(10)
     @items = search.results
   end
 

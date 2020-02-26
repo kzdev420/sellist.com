@@ -1,0 +1,15 @@
+<% if !@product.taxons.blank? %>
+  <div id="taxon-crumbs" data-hook class="mt-4">
+    <div class="row">
+      <div class="col-md-4">
+        <h6 class="font-14">Look for similar items</h6>
+
+        <div data-hook="product_taxons" id="similar_items_by_taxon">
+          <% @product.taxons.each do |taxon| %>
+            <p><%= link_to taxon.name, seo_url(taxon) %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

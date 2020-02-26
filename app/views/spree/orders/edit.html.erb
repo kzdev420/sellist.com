@@ -1,0 +1,102 @@
+<% @body_id = 'cart' %>
+
+<div data-hook="cart_container" class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+              <% if @order.line_items.empty? %>
+
+                <div data-hook="empty_cart">
+                  <p><%= t('spree.your_cart_is_empty') %></p>
+                  <p><%= link_to t('spree.continue_shopping'), products_path, class: 'button continue' %></p>
+                </div>
+
+              <% else %>
+                <div data-hook="outside_cart_form">
+                  <%= form_for @order, url: update_cart_path, html: {id: 'update-cart'} do |order_form| %>
+                    <div data-hook="inside_cart_form" class="row">
+                      <div class="col-lg-8">
+                          <div data-hook="cart_items" class="table-responsive">
+                            <%= render 'spree/orders/form', order_form: order_form %>
+                          </div> <!-- end table-responsive-->
+
+                          <!-- Add note input-->
+                          <div class="mt-3">
+                              <label for="example-textarea">Add a Note:</label>
+                              <%= order_form.text_area :special_instructions, rows: "3", placeholder: "Write some note..", class: "form-control" %>
+                          </div>
+
+                          <!-- action buttons-->
+                          <div class="row mt-4" data-hook="cart_buttons">
+                              <div class="col-sm-6">
+                                <%= link_to products_path, class: 'btn text-muted d-none d-sm-inline-block btn-link font-weight-semibold' do %>
+                                  <i class="mdi mdi-arrow-left"></i> Continue Shopping
+                                <% end %>
+                              </div> <!-- end col -->
+                              <div class="col-sm-6">
+                                  <div class="text-sm-right">
+                                    <%= button_tag t("spree.update"), class: "btn btn-primary", id: "update-button" %>
+                                    <%= button_tag class: 'btn btn-danger', id: 'checkout-link', name: 'checkout' do %>
+                                      <i class="mdi mdi-cart-plus mr-1"></i> Checkout
+                                    <% end %>
+                                  </div>
+                              </div> <!-- end col -->
+                          </div> <!-- end row-->
+                      </div>
+                      <!-- end col -->
+
+                      <div class="col-lg-4">
+                          <div class="border p-3 mt-4 mt-lg-0 rounded">
+                              <h4 class="header-title mb-3">Order Summary</h4>
+
+                              <div class="table-responsive">
+                                  <table class="table mb-0">
+                                      <tbody>
+                                          <tr>
+                                              <td>Grand Total :</td>
+                                              <td><%= Spree::Money.new(@order.item_total, currency: @order.currency) %></td>
+                                          </tr>
+                                          <tr>
+                                              <td>Discount : </td>
+                                              <td>-<%= Spree::Money.new(@order.promo_total, currency: @order.currency) %></td>
+                                          </tr>
+                                          <tr>
+                                              <td>Shipping Charge :</td>
+                                              <td><%= Spree::Money.new(@order.shipment_total, currency: @order.currency) %></td>
+                                          </tr>
+                                          <tr>
+                                              <td>Estimated Tax : </td>
+                                              <td><%= Spree::Money.new(@order.included_tax_total, currency: @order.currency) %></td>
+                                          </tr>
+                                          <tr>
+                                              <th>Total :</th>
+                                              <th><%= Spree::Money.new(@order.total, currency: @order.currency) %></th>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                              <!-- end table-responsive -->
+                          </div>
+
+                          <div class="alert alert-warning mt-3" role="alert">
+                              Use coupon code <strong>HYPBM</strong> and get 10% discount !
+                          </div>
+
+                          <div id="coupon_code" class="input-group mt-3" data-hook="coupon_code">
+                              <%= form_tag order_coupon_codes_path(@order), method: :post do %>
+                                <%= text_field_tag :coupon_code, nil, placeholder: "Coupon code", size: 10, class: "form-control form-control-light", 'aria-label': "Recipient's username" %>
+                                <div class="input-group-append">
+                                  <%= submit_tag "Apply", class: "btn btn-light" %>
+                                </div>
+                              <% end -%>
+                          </div>
+
+                      </div> <!-- end col -->
+                    </div> <!-- end inside -->
+                  <% end %>
+                </div> <!-- end row -->
+              <% end %>
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col -->
+</div>

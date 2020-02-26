@@ -1,0 +1,9 @@
+<% if (devise_controller? and controller_name == "sessions") or controller_name == "sessions" %>
+  <%= render partial: '/custom/login' %>
+<% elsif params[:controller].include? "spree" %>
+  <%= render partial: 'spree/layouts/spree_app' %>
+<% elsif current_user %>
+  <%= render partial: '/custom/user' %>
+<% elsif controller_name.include? "registrations" %>
+  <%= render partial: '/custom/registration' %>
+<% end %>

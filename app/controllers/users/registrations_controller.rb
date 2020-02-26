@@ -25,13 +25,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if @user.save
       if @user.account_type == "seller"
         @user.create_seller_detail(seller_params)
+        @user.spree_roles << Spree::Role.where(name: 'store').first
+        @user.spree_roles << Spree::Role.where(name: 'seller').first
       else
         @user.create_brand_detail(brand_params)
+        @user.spree_roles << Spree::Role.where(name: 'manufacturer').first
       end
       session[:user_id] = @user.id
       redirect_to user_activation_path
     else
-      #render action: 'initialize_user'
+      render action: 'initialize_user'
     end
   end
 
