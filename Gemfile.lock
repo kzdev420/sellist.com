@@ -270,7 +270,9 @@ GEM
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.0331)
-    mimemagic (0.3.3)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     mini_racer (0.2.6)
@@ -320,7 +322,8 @@ GEM
       highline (>= 1.6, < 3)
       options (~> 2.3.0)
     public_suffix (3.0.3)
-    puma (3.12.1)
+    puma (4.3.11)
+      nio4r (~> 2.0)
     rack (2.0.7)
     rack-cors (1.0.3)
     rack-pjax (1.1.0)
@@ -527,7 +530,7 @@ DEPENDENCIES
   mini_racer
   pg (~> 0.18)
   progress_bar
-  puma (~> 3.11)
+  puma (~> 4.3)
   rack-cors
   rails (~> 5.2.3)
   rails-jquery-autocomplete
